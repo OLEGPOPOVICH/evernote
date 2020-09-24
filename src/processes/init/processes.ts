@@ -20,6 +20,7 @@ function* initProcess() {
 
   yield delay(getConfig('defaultDelay', 2000));
 
+  // eslint-disable-next-line no-console
   yield call(console.log, 'Run init process!!!');
 
   yield put(
