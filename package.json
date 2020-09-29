@@ -31,7 +31,7 @@
   "author": "Anton Golomazov<Golomazov.AV@esphere.ru>",
   "license": "ISC",
   "dependencies": {
-    "@korus/leda": "^3.25.0",
+    "@korus/leda": "^3.26.0",
     "@reduxjs/toolkit": "^1.3.4",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
