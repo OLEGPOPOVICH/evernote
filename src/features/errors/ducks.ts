@@ -1,24 +1,30 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Получаем глобальные настройки приложения
-import { getConfig } from '@common/config';
+import { config } from '@common/config';
 
-const initialState: any = null;
+export type ErrorsState = {
+  title: string;
+  message: string;
+  code?: string;
+} | null;
+
+const initialState: ErrorsState = null;
 
 /**
  * Обработчик установки ошибки
  *
- * @param {null|object} state - Текущее состояние глобальных ошибок
- * @param {object} payload - Объект описывающий ошибку
+ * @param {ErrorsState} state - Текущее состояние глобальных ошибок
+ * @param {PayloadAction<NonNullable<ErrorsState>>} payload - Объект описывающий ошибку
  *
- * @returns {object} Новый стейт модуля errors
+ * @returns {ErrorsState} Новый стейт модуля errors
  */
 const toSetError = (
-  state: any,
+  state: ErrorsState,
   {
     payload: { title, message, code = '' },
-  }: { payload: { title: string; message: string; code: string } },
-) => ({
+  }: PayloadAction<NonNullable<ErrorsState>>,
+): ErrorsState => ({
   title,
   message,
   code,
@@ -29,10 +35,10 @@ const toSetError = (
  *
  * @returns {null} Значение по умолчанию для модуля errors
  */
-const toClearError = () => initialState;
+const toClearError = (): ErrorsState => initialState;
 
 const errorsSlice = createSlice({
-  name: getConfig('modules.errors'),
+  name: config.modules.errors,
   initialState,
   reducers: {
     setError: toSetError,

@@ -31,5 +31,6 @@ const configureStore = (preloadedState: any = {}) => {
 
 export default configureStore;
 export { history } from './root-reducer';
+export type RootState = ReturnType<typeof rootReducer>;
 
 /* eslint-enable */

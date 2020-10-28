@@ -1,12 +1,17 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { pathOr } from 'ramda';
 
-import { getConfig } from '@common/config';
+import { RootState } from '@store';
+import { config } from '@common/config';
 
-const noticesSelector = (state: any) =>
-  pathOr([], [getConfig('modules.notices')], state);
+import { NoticeState } from './ducks';
 
-const notices = createSelector(noticesSelector, (noticesArray) => noticesArray);
+const noticesSelector = (state: RootState): NoticeState =>
+  state[config.modules.notices];
+
+const notices = createSelector(
+  noticesSelector,
+  (noticesArray): NoticeState => noticesArray,
+);
 
 export const selectors = {
   notices,

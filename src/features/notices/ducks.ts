@@ -1,15 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NotificationsTypes } from '@korus/leda';
 
-import { getConfig } from '@common/config';
+// Получаем глобальные настройки приложения
+import { config } from '@common/config';
 
-const initialState: any[] = [];
+const initialState: NotificationsTypes.Item[] = [];
 
-const toPushNotice = (_: any, { payload }: { payload: any }) => [payload];
+export type NoticeState = typeof initialState;
 
-const toClearNotices = () => initialState;
+const toPushNotice = (
+  _: NoticeState,
+  { payload }: PayloadAction<NotificationsTypes.Item>,
+): NoticeState => [payload];
+
+const toClearNotices = (): NoticeState => initialState;
 
 const noticeSlice = createSlice({
-  name: getConfig('modules.notices'),
+  name: config.modules.notices,
   initialState,
   reducers: {
     pushNotice: toPushNotice,
