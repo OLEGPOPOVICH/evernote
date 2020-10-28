@@ -1,5 +1,8 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     "import/extensions": 0,
     "react/jsx-filename-extension": 0,
@@ -141,7 +144,7 @@
     "init-declarations": ["error", "always"],
     "no-shadow": "error",
     "no-undef-init": "error",
-    "no-use-before-define": "error",
+    "no-use-before-define": "off",
     "array-bracket-spacing": ["error", "never"],
     "block-spacing": ["error", "always"],
     "brace-style": [
@@ -281,12 +284,20 @@
   ],
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
-    "airbnb",
+    "airbnb-typescript",
     "prettier",
     "plugin:react-hooks/recommended"
   ],
-  "plugins": ["react-hooks", "optimize-regex", "prettier", "import"],
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "optimize-regex",
+    "prettier",
+    "import"
+  ],
   "env": {
     "browser": true
   },

@@ -1,28 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 // Получаем глобальные настройки приложения
-import { getConfig } from '@common/config';
+import { config } from '@common/config';
 
 const initialState = {
   isLoading: false,
   isGlobal: false,
 };
 
+export type LoadingState = typeof initialState;
+
 /**
  * Установка значения лоадера
  *
- * @param {object} state - Текущее состояние лоадера
- * @param {object} payload - Полезная нагрузка
+ * @param {LoadingState} state - Текущее состояние лоадера
+ * @param {PayloadAction<LoadingState>} payload - Полезная нагрузка
  *
- * @returns {object} Новое значение состояние глобального лоадера
+ * @returns {LoadingState} Новое значение состояние глобального лоадера
  */
-const toSetLoading = (state: any, { payload }: { payload: any }) => ({
+const toSetLoading = (
+  state: LoadingState,
+  { payload }: PayloadAction<LoadingState>,
+): LoadingState => ({
   ...state,
   ...payload,
 });
 
 const loadingSlice = createSlice({
-  name: getConfig('modules.loading'),
+  name: config.modules.loading,
   initialState,
   reducers: {
     setLoading: toSetLoading,
