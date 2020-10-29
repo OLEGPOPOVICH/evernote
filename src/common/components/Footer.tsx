@@ -3,7 +3,7 @@ import * as L from '@korus/leda';
 
 import packageData from '@packageSrc';
 
-export const Footer = () => (
+export const Footer: React.FC = () => (
   <L.Div className="wrapper">
     <L.Main className="content-box items margin-y">
       <L.Footer>
