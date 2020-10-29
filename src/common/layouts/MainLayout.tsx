@@ -12,7 +12,7 @@ import { ErrorLayout, selectors as errorSelectors } from '@features/errors';
 /**
  * @returns {JSX.Element} Базовый макет страницы
  */
-export const MainLayout = ({ children }: { children: React.ReactNode }) => {
+export const MainLayout: React.FC = ({ children }) => {
   const errorExist = useSelector(errorSelectors.isErrorExist);
 
   return (

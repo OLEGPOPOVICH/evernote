@@ -1,7 +1,7 @@
 import React from 'react';
 import * as L from '@korus/leda';
 
-export const Header = () => (
+export const Header: React.FC = () => (
   <L.Header className="user-box personal-box">
     <L.Nav>
       <L.A href="#" className="txt-large txt-bold">

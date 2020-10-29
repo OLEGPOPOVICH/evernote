@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectors } from '../selectors';
 import { actions } from '../ducks';
 
-export const Notices = () => {
+export const Notices: React.FC = () => {
   const notices = useSelector(selectors.notices);
   const dispatch = useDispatch();
 

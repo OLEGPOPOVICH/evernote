@@ -10,7 +10,7 @@ import { selectors } from '../selectors';
  * @reactProps {React.Element}
  * @returns {React.FC} - компонент глобального лоадера
  */
-export const GlobalLoader = ({ children }: { children: React.ReactNode }) => {
+export const GlobalLoader: React.FC = ({ children }) => {
   const isLoading = useSelector(selectors.isLoading);
   const isGlobal = useSelector(selectors.isGlobal);
 
