@@ -8,5 +8,6 @@ import { pathOr } from 'ramda';
  *
  * @returns {Function} Функция которая возвращает значение по ключу в объекте
  */
-export const getByKey = (hash: any, defaultValue: any) => (key: any) =>
-  pathOr(defaultValue, [key], hash);
+export const getByKey = <T, K extends keyof T>(hash: T, defaultValue: T[K]) => (
+  key: Extract<K, string | number>,
+): T[K] => pathOr(defaultValue, [key], hash);

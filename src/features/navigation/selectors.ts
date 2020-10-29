@@ -23,9 +23,9 @@ const hash = createSelector(navigationSelector, (navigation): string =>
 /**
  * Получение query-params в виде объекта
  */
-const queryParams = createSelector(navigationSelector, (navigation): {
-  [key: string]: any;
-} => pathOr({}, ['location', 'query'], navigation));
+const queryParams = createSelector(navigationSelector, (navigation) =>
+  pathOr({}, ['location', 'query'], navigation),
+);
 
 /**
  * Получение query-params в виде строки

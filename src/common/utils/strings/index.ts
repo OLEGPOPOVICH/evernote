@@ -17,7 +17,7 @@ import { v4 } from 'uuid';
 export const toCapitalize = compose(
   ({ firstLetter, tailString }) =>
     `${toUpper(firstLetter)}${toLower(tailString)}`,
-  (_: any) => ({ firstLetter: head(_), tailString: tail(_) }),
+  (_: string) => ({ firstLetter: head(_), tailString: tail(_) }),
 );
 
 /**
@@ -25,7 +25,7 @@ export const toCapitalize = compose(
  *
  * @returns {string} guid
  */
-export const uuid4 = () => v4().split('-').join('');
+export const uuid4 = (): string => v4().split('-').join('');
 
 /**
  * ## Метод переводит массив байт в base64
@@ -34,5 +34,5 @@ export const uuid4 = () => v4().split('-').join('');
  *
  * @returns {string} - Строка в base64
  */
-export const base64FromArray = (arrayBytes: number[]) =>
+export const base64FromArray = (arrayBytes: number[]): string =>
   String.fromCharCode.apply(null, arrayBytes);

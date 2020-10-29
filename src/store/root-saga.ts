@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { call, all, fork } from 'redux-saga/effects';
 
 import { initProcessWatcher } from '@processes/init';
@@ -7,7 +8,7 @@ import { initProcessWatcher } from '@processes/init';
  *
  * @returns {void}
  */
-export function* rootSaga() {
+export function* rootSaga(): SagaIterator {
   // eslint-disable-next-line no-console
   yield call(console.log, 'Root Saga Runner...!');
 
