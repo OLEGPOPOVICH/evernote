@@ -7,7 +7,7 @@ export const uiMessages = {
     title: 'Ошибка доступа',
     message: 'У вас нет прав на просмотр данного ресурса',
   },
-  modalText: (txt: string) => `Получение текста сообщения ${txt}`,
+  modalText: (txt: string): string => `Получение текста сообщения ${txt}`,
 };
 
 /**

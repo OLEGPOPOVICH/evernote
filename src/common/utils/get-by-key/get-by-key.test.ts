@@ -19,6 +19,7 @@ describe('getByKey - метод возвращает значение из HashM
   });
 
   test('Возвращение значения по умолчанию', () => {
+    // @ts-ignore
     const job = getByKey(hashMap, '')('job');
 
     expect(job).toBe('');

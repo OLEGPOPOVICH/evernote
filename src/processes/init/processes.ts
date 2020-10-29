@@ -1,3 +1,4 @@
+import { SagaIterator } from 'redux-saga';
 import { put, delay, all, takeEvery, call } from 'redux-saga/effects';
 
 import { getConfig } from '@common/config';
@@ -36,6 +37,6 @@ function* initProcess() {
  *
  * @returns {void}
  */
-export function* initProcessWatcher() {
+export function* initProcessWatcher(): SagaIterator {
   yield all([takeEvery(initProcessActions.initApp, initProcess)]);
 }

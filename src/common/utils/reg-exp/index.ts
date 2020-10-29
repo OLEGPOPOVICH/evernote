@@ -21,12 +21,12 @@
  * @returns {RegExp} - регулярное выражение
  */
 export const createPasswordValidateRegExp = (
-  patterns: any,
+  patterns: Record<string, string>,
   min = '',
   max = '',
-) => {
+): RegExp => {
   let regExpString = '';
-  let rules: any[] = [];
+  let rules: string[] = [];
 
   // Разрешённый диапазон для длины строки
   const range = `{${min},${max}}`;
