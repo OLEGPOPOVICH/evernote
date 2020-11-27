@@ -1,16 +1,37 @@
-import axios from 'axios';
+/* eslint-disable max-lines-per-function */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
 import { uuid4 } from '../strings';
 
-/* eslint-disable  */
+interface HttpClientParams {
+  url: string;
+  config?: Omit<AxiosRequestConfig, 'url' | 'headers'>;
+  version?: string;
+  headers?: Record<string, string>;
+}
+
+interface HttpClientParamsWithData<T = any> extends HttpClientParams {
+  config?: Omit<AxiosRequestConfig, 'url' | 'headers' | 'data'>;
+  data?: T;
+}
+
+interface HttpClient {
+  get<T = any>(params: HttpClientParams): AxiosPromise<T>;
+  delete<T = any>(params: HttpClientParams): AxiosPromise<T>;
+  head<T = any>(params: HttpClientParams): AxiosPromise<T>;
+  post<T = any, D = any>(params: HttpClientParamsWithData<D>): AxiosPromise<T>;
+  put<T = any, D = any>(params: HttpClientParamsWithData<D>): AxiosPromise<T>;
+  patch<T = any, D = any>(params: HttpClientParamsWithData<D>): AxiosPromise<T>;
+}
 
 /**
  * ## Метод создает и возращает объект axiosInstance
  *
  * @param {string} apiVersion - версия API
  *
- * @returns {AxiosInstance} - объект AxiosInstance
+ * @returns {HttpClient} - объект AxiosInstance
  */
-export const createHttpClient = (apiVersion = 'v1') => {
+export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   const axiosInstance = axios.create();
 
   /**
@@ -26,19 +47,14 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const get = ({
+  const get = <T = any>({
     url,
     config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    config: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParams): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.get(`${versionStr}/${url}`, {
+    return axiosInstance.get<T>(`${versionStr}/${url}`, {
       headers: {
         'x-ruid': uuid4(),
         ...headers,
@@ -60,19 +76,14 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const deleteReq = ({
+  const deleteReq = <T = any>({
     url,
     config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    config: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParams): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.delete(`${versionStr}/${url}`, {
+    return axiosInstance.delete<T>(`${versionStr}/${url}`, {
       headers: {
         'x-ruid': uuid4(),
         ...headers,
@@ -94,19 +105,14 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const head = ({
+  const head = <T = any>({
     url,
     config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    config: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParams): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.head(`${versionStr}/${url}`, {
+    return axiosInstance.head<T>(`${versionStr}/${url}`, {
       headers: {
         'x-ruid': uuid4(),
         ...headers,
@@ -123,30 +129,28 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @param {string} url - URL эндпоинта для отправки запроса
    * @param {Array<?Object>} data - данные запроса
+   * @param {AxiosRequestConfig} config - Настройки для запроса
    * @param {string} version - Версия API эндпоинта
    * @param {object} headers - Дополнительные заголовки
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const post = ({
+  const post = <T = any, D = any>({
     url,
     data,
+    config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    data: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.request({
+    return axiosInstance.request<T>({
       url: `${versionStr}/${url}`,
       method: 'post',
       headers: {
         'x-ruid': uuid4(),
         ...headers,
       },
+      ...config,
       data,
     });
   };
@@ -159,30 +163,28 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @param {string} url - URL эндпоинта для отправки запроса
    * @param {Array<?Object>} data - данные запроса
+   * @param {AxiosRequestConfig} config - Настройки для запроса
    * @param {string} version - Версия API эндпоинта
    * @param {object} headers - Дополнительные заголовки
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const put = ({
+  const put = <T = any, D = any>({
     url,
     data,
+    config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    data: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.request({
+    return axiosInstance.request<T>({
       url: `${versionStr}/${url}`,
       method: 'put',
       headers: {
         'x-ruid': uuid4(),
         ...headers,
       },
+      ...config,
       data,
     });
   };
@@ -195,37 +197,32 @@ export const createHttpClient = (apiVersion = 'v1') => {
    *
    * @param {string} url - URL эндпоинта для отправки запроса
    * @param {Array<?Object>} data - Данные запроса
+   * @param {AxiosRequestConfig} config - Настройки для запроса
    * @param {string} version - Версия API эндпоинта
    * @param {object} headers - Дополнительные заголовки
    *
    * @returns {AxiosPromise<any>} Результат ответа от сервера
    */
-  const patch = ({
+  const patch = <T = any, D = any>({
     url,
     data,
+    config,
     version = apiVersion,
     headers = {},
-  }: {
-    url: string;
-    data: any;
-    version: any;
-    headers: any;
-  }) => {
+  }: HttpClientParamsWithData<D>): AxiosPromise<T> => {
     const versionStr = version ? `api/${version}` : '';
-    return axiosInstance.request({
+    return axiosInstance.request<T>({
       url: `${versionStr}/${url}`,
       method: 'patch',
       headers: {
         'x-ruid': uuid4(),
         ...headers,
       },
+      ...config,
       data,
     });
   };
 
-  /**
-   * @ignore
-   */
   return {
     get,
     delete: deleteReq,
@@ -235,5 +232,3 @@ export const createHttpClient = (apiVersion = 'v1') => {
     patch,
   };
 };
-
-/* eslint-enable  */
