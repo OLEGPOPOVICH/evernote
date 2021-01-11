@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import * as L from '@korus/leda';
 import { useSelector } from 'react-redux';
 
@@ -9,10 +9,16 @@ import { Notices } from '@features/notices';
 
 import { ErrorLayout, selectors as errorSelectors } from '@features/errors';
 
+type LayoutProp = {
+  children: ReactNode | ReactNode[];
+};
+
 /**
- * @returns {JSX.Element} Базовый макет страницы
+ * ### Базовый макет страницы
+ *
+ * @returns {JSX.Element} - Базовый макет страницы
  */
-export const MainLayout: React.FC = ({ children }) => {
+export const MainLayout: React.FC<LayoutProp> = ({ children }) => {
   const errorExist = useSelector(errorSelectors.isErrorExist);
 
   return (
