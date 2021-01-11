@@ -11,7 +11,7 @@ export const uiMessages = {
 };
 
 /**
- * Метод возвращает сообщение для вывода на UI
+ * ### Метод возвращает сообщение для вывода на UI
  *
  * @returns {string|object|function|any}
  */

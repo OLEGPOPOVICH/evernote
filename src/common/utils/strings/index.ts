@@ -2,12 +2,10 @@ import { compose, head, tail, toLower, toUpper } from 'ramda';
 import { v4 } from 'uuid';
 
 /**
- * ## Метод преобразования первого символа строки в верхний регистр
+ * ### Метод преобразования первого символа строки в верхний регистр
  *
  * @example
- * // Строковая переменная с тестовой строкой
  * const str = 'тестовая строка';
- * // Преобразуем первый символ в верхний регистр
  * const newStr = toCapitalize(str); // Тестовая строка
  *
  * @param {string} str - Преобразуемая строка
@@ -21,14 +19,14 @@ export const toCapitalize = compose(
 );
 
 /**
- * ## Метод генерации guid
+ * ### Метод генерации guid
  *
  * @returns {string} guid
  */
 export const uuid4 = (): string => v4().split('-').join('');
 
 /**
- * ## Метод переводит массив байт в base64
+ * ### Метод переводит массив байт в base64
  *
  * @param {Array<number>} arrayBytes - Массив байт
  *

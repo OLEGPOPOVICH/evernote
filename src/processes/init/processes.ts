@@ -2,6 +2,7 @@ import { SagaIterator } from 'redux-saga';
 import { put, delay, all, takeEvery, call } from 'redux-saga/effects';
 
 import { getConfig } from '@common/config';
+import { logger } from '@common/utils';
 import { actions as loadingActions } from '@features/loading';
 
 import { actions as initProcessActions } from './actions';
@@ -11,7 +12,7 @@ import { actions as initProcessActions } from './actions';
  *
  * @returns {void}
  */
-function* initProcess() {
+function* initProcess(): Generator {
   yield put(
     loadingActions.setLoading({
       isLoading: true,
@@ -21,8 +22,7 @@ function* initProcess() {
 
   yield delay(getConfig('defaultDelay', 2000));
 
-  // eslint-disable-next-line no-console
-  yield call(console.log, 'Run init process!!!');
+  yield call(logger, 'Run init process!!!');
 
   yield put(
     loadingActions.setLoading({

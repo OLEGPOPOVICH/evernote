@@ -25,7 +25,7 @@ interface HttpClient {
 }
 
 /**
- * ## Метод создает и возращает объект axiosInstance
+ * ### Метод создает и возращает объект axiosInstance
  *
  * @param {string} apiVersion - версия API
  *
@@ -35,7 +35,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   const axiosInstance = axios.create();
 
   /**
-   * ## Метод для отправки GET-запроса
+   * ### Метод для отправки GET-запроса
    *
    * @example
    * get('URL_TO_BACKEND', {params: { search: 'Сбербанк' }});
@@ -64,7 +64,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   };
 
   /**
-   * ## Метод для отправки DELETE-запроса
+   * ### Метод для отправки DELETE-запроса
    *
    * @example
    * deleteReq('URL_TO_BACKEND');
@@ -93,7 +93,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   };
 
   /**
-   * ## Метод для отправки HEAD-запроса
+   * ### Метод для отправки HEAD-запроса
    *
    * @example
    * head('URL_TO_BACKEND');
@@ -122,7 +122,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   };
 
   /**
-   * ## Метод для отправки POST-запроса
+   * ### Метод для отправки POST-запроса
    *
    * @example
    * post('URL_TO_BACKEND', data);
@@ -156,7 +156,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   };
 
   /**
-   * ## Метод для отправки PUT-запроса
+   * ### Метод для отправки PUT-запроса
    *
    * @example
    * put('URL_TO_BACKEND', data,);
@@ -190,7 +190,7 @@ export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
   };
 
   /**
-   * ## Метод для отправки PATCH-запроса
+   * ### Метод для отправки PATCH-запроса
    *
    * @example
    * patch('URL_TO_BACKEND', data);

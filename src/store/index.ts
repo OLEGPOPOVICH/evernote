@@ -1,12 +1,11 @@
-import { configureStore as confStore } from '@reduxjs/toolkit';
+import { configureStore as confStore, EnhancedStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
 import { getConfig } from '@common/config';
 import rootReducer from './root-reducer';
 import { rootSaga } from './root-saga';
 
-/* eslint-disable */
-const configureStore = (preloadedState: any = {}) => {
+const configureStore = (preloadedState: unknown = {}): EnhancedStore => {
   const sagaMiddleware = createSagaMiddleware();
   const middleware = [sagaMiddleware];
 
@@ -32,5 +31,3 @@ const configureStore = (preloadedState: any = {}) => {
 export default configureStore;
 export { history } from './root-reducer';
 export type RootState = ReturnType<typeof rootReducer>;
-
-/* eslint-enable */
