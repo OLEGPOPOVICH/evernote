@@ -9,7 +9,7 @@
     "develop": "webpack-dev-server --config ./webpack/app/develop",
     "production": "webpack --config ./webpack/app/production",
     "addStyles": "mkdirp ./dist/assets && ncp ./node_modules/styles-esphere ./dist/assets && npm run addLedaStyles",
-    "addLedaStyles": "ncp ./node_modules/@korus/leda/dist/styles/leda ./dist/assets/css/leda",
+    "addLedaStyles": "ncp ./node_modules/@korus/leda/dist/styles/korus-ui ./dist/assets/css/korus-ui",
     "addAssets": "npm run addStyles && ncp ./public ./dist",
     "clean": "rimraf ./dist",
     "clearScss": "rimraf ./dist/assets/scss",
@@ -30,7 +30,7 @@
     "redux",
     "typescript",
     "redux-saga",
-    "leda",
+    "korus-ui",
     "styles-esphere"
   ],
   "author": "Anton Golomazov<Golomazov.AV@esphere.ru>",
