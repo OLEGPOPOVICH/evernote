@@ -127,6 +127,11 @@ http://localhost:3000/#/
 
 2 - номер патча
 
+### Ведение Changelog'а
+
+Для ведения журнала изменений используется утилита change-gen, в первую очередь необходимо настроить ее
+под ваш проект. Более подробно можно узнать на странице в [confluence](https://confluence.esphere.ru/pages/viewpage.action?pageId=153275826)
+
 ### Работа с гитом
 
 В проекте используется [Gitflow](https://confluence.esphere.ru/display/Frontend/Git+Flow)

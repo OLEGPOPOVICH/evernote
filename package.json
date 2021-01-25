@@ -20,7 +20,8 @@
     "updateDependencies": "npm i @korus/leda@latest && npm i styles-esphere@latest",
     "openMR": "git push -o merge_request.create -o merge_request.target=master -o merge_request.remove_source_branch origin feature/update-korus-ui",
     "commitUpdate": "git add . && git commit -m 'update-korus-ui'",
-    "updateKorusUI": "npm run createBranch && npm run updateDependencies && npm run build && npm run commitUpdate && npm run openMR"
+    "updateKorusUI": "npm run createBranch && npm run updateDependencies && npm run build && npm run commitUpdate && npm run openMR",
+    "genChangelog": "change-gen gen"
   },
   "repository": {
     "type": "git",
@@ -90,6 +91,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-transform-imports": "^2.0.0",
+    "change-gen": "^1.0.6",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
