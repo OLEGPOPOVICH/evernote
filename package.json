@@ -39,7 +39,7 @@
   "author": "Anton Golomazov<Golomazov.AV@esphere.ru>",
   "license": "ISC",
   "dependencies": {
-    "@korus/leda": "^3.33.0",
+    "@korus/leda": "^3.34.0",
     "@reduxjs/toolkit": "^1.3.4",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
@@ -61,7 +61,7 @@
     "redux-persist": "^6.0.0",
     "redux-saga": "^1.1.3",
     "regenerator-runtime": "^0.13.5",
-    "styles-esphere": "^2.2.78",
+    "styles-esphere": "^2.2.82",
     "uuid": "^7.0.3"
   },
   "devDependencies": {
