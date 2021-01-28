@@ -1,7 +1,7 @@
 import { configureStore as confStore, EnhancedStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 
-import { getConfig } from '@common/config';
+import { config } from '@common/config';
 import rootReducer from './root-reducer';
 import { rootSaga } from './root-saga';
 
@@ -19,7 +19,7 @@ const configureStore = (preloadedState: unknown = {}): EnhancedStore => {
   // Включаем redux-saga middleware
   sagaMiddleware.run(rootSaga);
 
-  if (getConfig('environment', 'production') !== 'production' && module.hot) {
+  if (config.environment !== 'production' && module.hot) {
     module.hot.accept('./root-reducer', () => {
       store.replaceReducer(rootReducer);
     });

@@ -1,7 +1,7 @@
 import { SagaIterator } from 'redux-saga';
 import { put, delay, all, takeEvery, call } from 'redux-saga/effects';
 
-import { getConfig } from '@common/config';
+import { config } from '@common/config';
 import { logger } from '@common/utils';
 import { actions as loadingActions } from '@features/loading';
 
@@ -20,7 +20,7 @@ function* initProcess(): Generator {
     }),
   );
 
-  yield delay(getConfig('defaultDelay', 2000));
+  yield delay(config.defaultDelay);
 
   yield call(logger, 'Run init process!!!');
 

@@ -1,1 +1,1 @@
-export { getUiMessages } from './messages';
+export { uiMessages } from './messages';
