@@ -9,6 +9,7 @@
   "path-autocomplete.pathMappings": {
     "^@common/(.+)": "./src/common/\\1",
     "^@features/(.+)": "./src/features/\\1",
+    "^@layouts/(.+)": "./src/layouts/\\1",
     "^@pages/(.+)": "./src/pages/\\1",
     "^@store/(.+)": "./src/store/\\1",
     "^@processes/(.+)": "./src/processes/\\1",

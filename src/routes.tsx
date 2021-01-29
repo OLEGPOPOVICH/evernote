@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router';
 import { History, LocationState } from 'history';
 
 import { AboutPage, HomePage } from '@pages';
-import { MainLayout } from '@common/layouts/MainLayout';
+import { MainLayout } from '@layouts';
 
 interface AppRoutesProps<S = LocationState> {
   history: History<S>;
