@@ -1,6 +1,4 @@
-import { getByKey } from '@common/utils';
-
-export const uiMessages = {
+const createUiMessages = () => ({
   btnSubmit: 'Отправить',
   btnCancel: 'Отменить',
   requestAccessError: {
@@ -8,11 +6,11 @@ export const uiMessages = {
     message: 'У вас нет прав на просмотр данного ресурса',
   },
   modalText: (txt: string): string => `Получение текста сообщения ${txt}`,
-};
+});
 
 /**
- * ### Метод возвращает сообщение для вывода на UI
- *
- * @returns {string|object|function|any}
+ * Сообщение для вывода на UI
  */
-export const getUiMessages = getByKey(uiMessages, '');
+export const uiMessages: Readonly<ReturnType<
+  typeof createUiMessages
+>> = createUiMessages();

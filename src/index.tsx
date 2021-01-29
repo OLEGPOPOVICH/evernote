@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import '@styles/main.css';
 
-import { getConfig } from '@common/config';
+import { config } from '@common/config';
 import { AppRoutes } from '@src/routes';
 import configureStore, { history } from '@store';
 import { actions as initProcessActions } from '@processes/init';
@@ -23,6 +23,6 @@ const render = () => {
 
 window.addEventListener('load', render);
 
-if (getConfig('environment') !== 'production' && module.hot) {
+if (config.environment !== 'production' && module.hot) {
   module.hot.accept('@src/routes', render);
 }
