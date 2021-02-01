@@ -7,6 +7,8 @@ const appPaths = {
   appCommon: path.resolve(__dirname, '../../src/common'),
   // папка с модулями приложения
   appFeatures: path.resolve(__dirname, '../../src/features'),
+  // папка с макетами приложения
+  appLayouts: path.resolve(__dirname, '../../src/layouts'),
   // папка с конфигурацией redux-store приложения
   appStore: path.resolve(__dirname, '../../src/store'),
   // папка с процессами приложения

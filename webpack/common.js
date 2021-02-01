@@ -50,6 +50,7 @@ module.exports = {
       '@common': getConfig('appCommon'),
       '@styles': getConfig('appStyles'),
       '@features': getConfig('appFeatures'),
+      '@layouts': getConfig('appLayouts'),
       '@processes': getConfig('appProcesses'),
       '@pages': getConfig('appPages'),
       '@store': getConfig('appStore'),

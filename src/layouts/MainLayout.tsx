@@ -2,8 +2,7 @@ import React, { ReactNode } from 'react';
 import * as L from '@korus/leda';
 import { useSelector } from 'react-redux';
 
-import { Header } from '@common/components/header';
-import { Footer } from '@common/components/footer';
+import { Header, Footer } from '@common/components';
 import { GlobalLoader } from '@features/loading';
 import { Notices } from '@features/notices';
 
