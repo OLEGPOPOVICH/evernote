@@ -1,7 +1,7 @@
 {
-  "name": "react-ts-start",
+  "name": "evernote",
   "version": "0.1.0",
-  "description": "Заготовка под проект на react-redux стеке",
+  "description": "",
   "scripts": {
     "test": "npx jest",
     "start": "npm run clean && npm run addAssets && npm run develop",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://git.esphere.local/Golomazov.AV/react-ts-start"
+    "url": "https://github.com/OLEGPOPOVICH/evernote"
   },
   "keywords": [
     "webpack",
@@ -36,7 +36,7 @@
     "korus-ui",
     "styles-esphere"
   ],
-  "author": "Anton Golomazov<Golomazov.AV@esphere.ru>",
+  "author": "Popovich O.I<popovich.oi@esphere.ru>",
   "license": "ISC",
   "dependencies": {
     "@korus/leda": "^3.34.0",
