@@ -1,0 +1,188 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Gorgeous Fresh Bike",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 2,
+      "title": "Refined Fresh Bacon",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 3,
+      "title": "Tasty Metal Shoes",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 4,
+      "title": "Fantastic Rubber Tuna",
+      "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 5,
+      "title": "Incredible Wooden Tuna",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 6,
+      "title": "Licensed Wooden Pants",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 7,
+      "title": "Practical Concrete Shirt",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 8,
+      "title": "Licensed Rubber Tuna",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 9,
+      "title": "Handmade Metal Pizza",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 10,
+      "title": "Handmade Frozen Salad",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 11,
+      "title": "Licensed Fresh Ball",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 12,
+      "title": "Licensed Wooden Bike",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 13,
+      "title": "Awesome Rubber Ball",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 14,
+      "title": "Sleek Plastic Chips",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 15,
+      "title": "Rustic Metal Chair",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 16,
+      "title": "Handcrafted Wooden Table",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 17,
+      "title": "Ergonomic Metal Chips",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 18,
+      "title": "Unbranded Wooden Tuna",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 19,
+      "title": "Fantastic Soft Chair",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 20,
+      "title": "Practical Fresh Car",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 21,
+      "title": "Unbranded Plastic Shirt",
+      "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 22,
+      "title": "Gorgeous Rubber Salad",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 23,
+      "title": "Rustic Steel Pants",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 24,
+      "title": "Unbranded Granite Bike",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 25,
+      "title": "Refined Steel Keyboard",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 26,
+      "title": "Intelligent Concrete Chips",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 27,
+      "title": "Awesome Rubber Sausages",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 28,
+      "title": "Practical Metal Cheese",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 29,
+      "title": "Rustic Granite Table",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "imageUrl": "https://picsum.photos/300/300"
+    },
+    {
+      "id": 30,
+      "title": "Unbranded Steel Shoes",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "imageUrl": "https://picsum.photos/300/300"
+    }
+  ],
+  "users": [
+    { "login": "Oleg", "password": "123456" },
+    { "login": "Vlad", "password": "1234" }
+  ]
+}

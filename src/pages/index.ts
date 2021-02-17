@@ -1,2 +1,2 @@
+export { Authorization } from './Authorization';
 export { HomePage } from './HomePage';
-export { AboutPage } from './AboutPage';

@@ -1,6 +1,7 @@
 const createConfig = () => ({
   maxFileSize: 11000,
   modules: {
+    auth: 'auth' as const,
     errors: 'errors' as const,
     loading: 'loading' as const,
     notices: 'notices' as const,
