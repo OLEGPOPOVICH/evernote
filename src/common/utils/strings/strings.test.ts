@@ -1,4 +1,4 @@
-import { toCapitalize, uuid4 } from './index';
+import { toCapitalize, trim, uuid4 } from './index';
 
 describe('toCapitalize - Метод преобразования первого символа строки в верхний регистр', () => {
   test('Простое преобразование входящей строки', () => {
@@ -46,8 +46,8 @@ describe('trim - Метод удаляет пробельные символы �
 
     const result = 'Test string';
 
-    expect(toCapitalize(testStr1)).toEqual(result);
-    expect(toCapitalize(testStr2)).toEqual(result);
-    expect(toCapitalize(testStr3)).toEqual(result);
+    expect(trim(testStr1)).toEqual(result);
+    expect(trim(testStr2)).toEqual(result);
+    expect(trim(testStr3)).toEqual(result);
   });
 });
