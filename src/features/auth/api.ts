@@ -1,19 +1,10 @@
-import axios from 'axios';
+import { createHttpClient } from '@common/utils';
+import { LoginData, ResponseType } from './types';
 
-/**
- * Авторизация
- *
- * @param {Object} data - Параметры для авторизации
- *
- * @returns {Boolean} - Состояние авторизации
- */
-const login = (data: unknown) =>
-  axios.get('http://localhost:3001/users').then((resp: any) => {
-    const users = resp.data;
-    return users.some(
-      (user: any) => JSON.stringify(user) === JSON.stringify(data),
-    );
-  });
+const request = createHttpClient();
+
+const login = (data: LoginData): ResponseType =>
+  request.post({ url: 'auth/login', data });
 
 export const api = {
   login,

@@ -9,3 +9,7 @@ coverage
 .idea
 
 .DS_Store
+
+server
+
+test.rest

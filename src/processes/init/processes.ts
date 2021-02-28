@@ -5,6 +5,7 @@ import { config } from '@common/config';
 import { logger } from '@common/utils';
 import { actions as loadingActions } from '@features/loading';
 
+import { actions as authActions } from '@features/auth';
 import { actions as initProcessActions } from './actions';
 
 /**
@@ -19,6 +20,8 @@ function* initProcess(): Generator {
       isGlobal: true,
     }),
   );
+
+  yield put(authActions.autoLogin());
 
   yield delay(config.defaultDelay);
 

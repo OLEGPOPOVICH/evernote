@@ -32,7 +32,7 @@ interface HttpClient {
  * @returns {HttpClient} - объект AxiosInstance
  */
 export const createHttpClient = (apiVersion = 'v1'): HttpClient => {
-  const axiosInstance = axios.create();
+  const axiosInstance = axios.create({ baseURL: 'http://localhost:8000/' });
 
   /**
    * ### Метод для отправки GET-запроса

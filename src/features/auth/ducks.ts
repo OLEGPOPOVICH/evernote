@@ -1,25 +1,40 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
-import { LoginData } from './components/LoginForm';
 
-const initialState = {
-  login: '',
+import { LoginData, AuthState, ServerData } from './types';
+
+const AUTO_LOGIN = 'AUTO_LOGIN';
+const AUTH_LOGOUT = 'AUTH_LOGOUT';
+const actionAutoLogin = createAction(AUTO_LOGIN);
+const actionLogout = createAction(AUTH_LOGOUT);
+
+export type InitialState = {
+  email: string;
+  password: string;
+  isAuthorizationed: boolean;
+  isProcessed: boolean;
+  authError: string;
+  serverData: ServerData;
+};
+
+const initialState: InitialState = {
+  email: '',
   password: '',
   isAuthorizationed: false,
   isProcessed: false,
   authError: '',
+  serverData: null,
 };
 
-export type InitialState = typeof initialState;
-export type AuthState = {
-  isAuthorizationed?: boolean;
-  isProcessed?: boolean;
-  authError?: string;
-};
-
-// Авторизация
-const toLogin = (
+/**
+ * ## Авторизация
+ *
+ * @param {InitialState} state - Состояние модуля
+ *
+ * @returns {void}
+ */
+const setLogin = (
   state: InitialState,
   { payload }: PayloadAction<LoginData>,
 ): InitialState => ({
@@ -29,8 +44,14 @@ const toLogin = (
   authError: '',
 });
 
-// Установка состояния стора
-const toAuthSet = (
+/**
+ * ## Установка состояния формы авторизации
+ *
+ * @param {InitialState} state - Состояние модуля
+ *
+ * @returns {void}
+ */
+const setAuthState = (
   state: InitialState,
   { payload }: PayloadAction<AuthState>,
 ): InitialState => ({
@@ -38,17 +59,34 @@ const toAuthSet = (
   ...payload,
 });
 
+/**
+ * ##
+ *
+ * @param {InitialState} state - Состояние модуля
+ *
+ * @returns {void}
+ */
+const setServerData = (
+  state: InitialState,
+  { payload }: PayloadAction<ServerData>,
+): InitialState => ({
+  ...state,
+  ...{ serverData: payload },
+});
+
 const loginSlice = createSlice({
   name: config.modules.auth,
   initialState,
   reducers: {
-    login: toLogin,
-    authSet: toAuthSet,
+    login: setLogin,
+    authState: setAuthState,
+    serverData: setServerData,
   },
 });
 
 export const authReducer = loginSlice.reducer;
-
 export const actions = {
   ...loginSlice.actions,
+  autoLogin: actionAutoLogin,
+  logout: actionLogout,
 };

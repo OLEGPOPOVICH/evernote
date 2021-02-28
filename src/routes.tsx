@@ -3,8 +3,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router';
 import { History, LocationState } from 'history';
 
-import { Authorization, HomePage } from '@pages';
 import { MainLayout } from '@layouts';
+
+import { AuthorizationPage, HomePage, NotesPage } from '@pages';
 
 interface AppRoutesProps<S = LocationState> {
   history: History<S>;
@@ -22,8 +23,9 @@ export function AppRoutes<S = LocationState>({
     <ConnectedRouter history={history}>
       <MainLayout>
         <Switch>
-          <Route exact path="/auth" component={Authorization} />
+          <Route path="/auth" component={AuthorizationPage} />
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/notes" component={NotesPage} />
         </Switch>
       </MainLayout>
     </ConnectedRouter>

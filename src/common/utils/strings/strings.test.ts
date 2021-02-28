@@ -1,4 +1,4 @@
-import { toCapitalize, uuid4 } from './index';
+import { toCapitalize, trim, uuid4 } from './index';
 
 describe('toCapitalize - Метод преобразования первого символа строки в верхний регистр', () => {
   test('Простое преобразование входящей строки', () => {
@@ -35,5 +35,19 @@ describe('uuid4 - Метод генерации guid', () => {
     const expected = [expect.stringMatching(/([\dA-Za-z]{32})/)];
 
     expect([guid]).toEqual(expect.arrayContaining(expected));
+  });
+});
+
+describe('trim - Метод удаляет пробельные символы с начала и конца строки', () => {
+  test('Удаление прорбельных символов', () => {
+    const testStr1 = 'Test string ';
+    const testStr2 = ' Test string';
+    const testStr3 = ' Test string ';
+
+    const result = 'Test string';
+
+    expect(trim(testStr1)).toEqual(result);
+    expect(trim(testStr2)).toEqual(result);
+    expect(trim(testStr3)).toEqual(result);
   });
 });
