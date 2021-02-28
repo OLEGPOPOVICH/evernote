@@ -34,3 +34,11 @@ export const uuid4 = (): string => v4().split('-').join('');
  */
 export const base64FromArray = (arrayBytes: number[]): string =>
   String.fromCharCode.apply(null, arrayBytes);
+
+/**
+ * ### Метод удаляет пробельные символы с начала и конца строки
+ *
+ * @param {string} str - строка оригинал
+ * @returns {string} срока без пробельных символов в начале и конце строки
+ */
+export const trim = (str: string): string => str.trim();

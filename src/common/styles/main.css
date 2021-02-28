@@ -1,3 +1,103 @@
 h1 {
   color: black;
+  text-align: center;
+}
+.header__user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.user_img {
+  width: 40px;
+  height: 40px;
+  margin-right: 14px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.user_img img {
+  min-height: 100%;
+  margin: 0 auto;
+}
+
+.btn_logout {
+  display: table;
+  margin-top: 5px;
+  padding: 0px 10px;
+  background-color: #f2f4f7;
+  border-radius: 7px;
+}
+
+.menu-h:hover .btn_logout {
+  background-color: white;
+}
+
+
+.notes {
+  margin: 30px auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.notes > li:nth-child(n + 2) {
+  margin-top: 30px;
+}
+
+.note {
+  display: flex;
+  padding: 20px;
+  box-shadow: 0px 0px 6px rgb(0 0 0 / 35%);
+  border-radius: 6px;
+}
+
+.note__img {
+  width: 150px;
+  min-width: 150px;
+  height:  150px;
+  margin-right: 20px;
+  background-color: #f2f4f7;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.note__img img {
+  height: 100%;
+}
+
+.note__info {
+  width: 100%;
+}
+
+.note__caption {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.note__caption h2 {
+  font-size: 25px;
+}
+
+.note__caption span {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.note__desc {
+  height: 85px;
+}
+
+.tags {
+  display: flex;
+}
+
+.tags li {
+  padding: 3px 10px;
+  background-color: #f2f4f7;
+  border-radius: 6px;
+}
+
+.tags li:nth-child(n + 2) {
+  margin-left: 10px;
 }

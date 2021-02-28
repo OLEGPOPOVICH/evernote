@@ -37,3 +37,17 @@ describe('uuid4 - Метод генерации guid', () => {
     expect([guid]).toEqual(expect.arrayContaining(expected));
   });
 });
+
+describe('trim - Метод удаляет пробельные символы с начала и конца строки', () => {
+  test('Удаление прорбельных символов', () => {
+    const testStr1 = 'Test string ';
+    const testStr2 = ' Test string';
+    const testStr3 = ' Test string ';
+
+    const result = 'Test string';
+
+    expect(toCapitalize(testStr1)).toEqual(result);
+    expect(toCapitalize(testStr2)).toEqual(result);
+    expect(toCapitalize(testStr3)).toEqual(result);
+  });
+});

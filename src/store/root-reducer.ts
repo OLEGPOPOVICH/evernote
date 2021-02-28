@@ -8,10 +8,12 @@ import { errorsReducer } from '@features/errors';
 import { loadingReducer } from '@features/loading';
 import { noticeReducer } from '@features/notices';
 import { authReducer } from '@features/auth';
+import { notesReducer } from '@features/notes';
 
 export const history = createHashHistory();
 
 const rootReducer = combineReducers({
+  [config.modules.notes]: notesReducer,
   [config.modules.auth]: authReducer,
   [config.modules.errors]: errorsReducer,
   [config.modules.loading]: loadingReducer,
