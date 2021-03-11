@@ -2,7 +2,7 @@ import React from 'react';
 import * as L from '@korus/leda';
 
 import { Note } from './Note';
-import { NotesType, NoteType } from '../types';
+import { NoteItemType, NotesType } from '../types';
 
 /**
  * ## Компонент список заметок
@@ -20,8 +20,8 @@ export const Notes: React.FC<NotesType> = ({
    * @returns {JSX.Element} Список заметок
    */
   function renderNote() {
-    return notes.map((note: NoteType) => <Note {...note} key={note.title} />);
+    return notes.map((note: NoteItemType) => <Note {...note} key={note.id} />);
   }
 
-  return <L.Ul className="notes">{notes.length && renderNote()}</L.Ul>;
+  return <L.Ul className="notes">{notes ? renderNote() : null}</L.Ul>;
 };

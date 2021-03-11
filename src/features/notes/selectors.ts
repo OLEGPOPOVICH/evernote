@@ -5,16 +5,16 @@ import { config } from '@common/config';
 import { pathOr } from '@common/utils';
 
 import { InitialState } from './ducks';
-import { NotesType } from './types';
+import { NotesType, NoteType } from './types';
 
 /**
- * ## [Селектор] Данные по заметкам
+ * ## [Селектор] Получить данные по заметкам
  */
 const notesSelector = (state: RootState): InitialState =>
   state[config.modules.notes];
 
 /**
- * ## [Селектор] Список заметок
+ * ## [Селектор] Получить сисок заметок
  */
 const getNotes = createSelector(
   notesSelector,
@@ -23,6 +23,17 @@ const getNotes = createSelector(
   }),
 );
 
+/**
+ * ## [Селектор] Получить заметку
+ */
+const getNote = createSelector(
+  notesSelector,
+  (notes: InitialState): NoteType => ({
+    note: pathOr({}, ['note'], notes),
+  }),
+);
+
 export const selectors = {
   getNotes,
+  getNote,
 };

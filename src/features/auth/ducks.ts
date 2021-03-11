@@ -1,8 +1,7 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
-
-import { LoginData, AuthState, ServerData } from './types';
+import { LoginData, AuthState, SessionData } from './types';
 
 const AUTO_LOGIN = 'AUTO_LOGIN';
 const AUTH_LOGOUT = 'AUTH_LOGOUT';
@@ -12,23 +11,23 @@ const actionLogout = createAction(AUTH_LOGOUT);
 export type InitialState = {
   email: string;
   password: string;
-  isAuthorizationed: boolean;
+  isAuth: boolean;
   isProcessed: boolean;
   authError: string;
-  serverData: ServerData;
+  serverData: SessionData;
 };
 
 const initialState: InitialState = {
   email: '',
   password: '',
-  isAuthorizationed: false,
+  isAuth: false,
   isProcessed: false,
   authError: '',
   serverData: null,
 };
 
 /**
- * ## Авторизация
+ * ## [Экшин] Записать данные пользователя для авторизации в стор
  *
  * @param {InitialState} state - Состояние модуля
  *
@@ -45,7 +44,7 @@ const setLogin = (
 });
 
 /**
- * ## Установка состояния формы авторизации
+ * ## [Экшин] Записать состояние формы авторизации в стор
  *
  * @param {InitialState} state - Состояние модуля
  *
@@ -60,19 +59,27 @@ const setAuthState = (
 });
 
 /**
- * ##
+ * ## [Экшин] Записать токен и авторизованного пользователя в стор
  *
  * @param {InitialState} state - Состояние модуля
  *
  * @returns {void}
  */
-const setServerData = (
+const setAuthData = (
   state: InitialState,
-  { payload }: PayloadAction<ServerData>,
+  { payload }: PayloadAction<SessionData>,
 ): InitialState => ({
   ...state,
   ...{ serverData: payload },
 });
+
+/**
+ * ## [Экшин] сброс стора
+ *
+ * @returns {void}
+ */
+
+const setInitialStore = () => initialState;
 
 const loginSlice = createSlice({
   name: config.modules.auth,
@@ -80,7 +87,8 @@ const loginSlice = createSlice({
   reducers: {
     login: setLogin,
     authState: setAuthState,
-    serverData: setServerData,
+    serverData: setAuthData,
+    setInitialStore,
   },
 });
 

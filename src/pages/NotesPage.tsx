@@ -20,7 +20,11 @@ export const NotesPage: React.FC = (): JSX.Element => {
   const { notes }: NotesType = useSelector(notesSelectors.getNotes);
 
   useEffect(() => {
-    dispatch(notesActions.initNotesPage());
+    dispatch(notesActions.loadingNotesPage());
+
+    return () => {
+      dispatch(notesActions.setInitialStore());
+    };
   }, []);
 
   return (

@@ -4,11 +4,11 @@ import { history } from '@store';
 /**
  * Переход по страницам в сагах
  *
- * @param {any} path - путь страницы перехода
+ * @param {string} path - путь страницы перехода
  *
  * @returns {void}
  */
-function* navTo(path: any) {
+function* navTo(path: string): Generator {
   yield put({
     type: '@@router/LOCATION_CHANGE',
     payload: {

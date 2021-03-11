@@ -1,7 +1,7 @@
 import { apply, call, fork, put } from 'redux-saga/effects';
 
 import { actions } from './ducks';
-import { ServerData } from './types';
+import { SessionData } from './types';
 
 /**
  * ## Процесс установки сообщения об ошибке при авторизации
@@ -22,13 +22,13 @@ function* setErrorMessageSaga(message = ''): Generator {
 /**
  * ## Процесс записи данных авторизации в сессию
  *
- * @param {ServerData} data Инфа о токене и пользователе
+ * @param {SessionData} data Инфа о токене и пользователе
  *
  * @returns {void}
  */
-function* setSessionData(data: ServerData): Generator {
+function* setSessionData(data: SessionData): Generator {
   yield apply(sessionStorage, sessionStorage.setItem, [
-    'serverData',
+    'sessionData',
     JSON.stringify(data),
   ]);
 }
@@ -36,13 +36,13 @@ function* setSessionData(data: ServerData): Generator {
 /**
  * ## Процесс получения данных авторизации из сессии
  *
- * @returns {void}
+ * @returns {SessionData} -
  */
 function* getSessionData(): Generator {
-  const sessionData: any = yield apply(sessionStorage, sessionStorage.getItem, [
-    'serverData',
+  const sessionData = yield apply(sessionStorage, sessionStorage.getItem, [
+    'sessionData',
   ]);
-  /* TODO - как правильно написать тип/как задать возвращающийся тип */
+
   return sessionData;
 }
 
@@ -61,19 +61,13 @@ function* clearSessionData(): Generator {
  * @returns {void}
  */
 function* logoutSaga(): Generator {
-  let sessionData: string | any = yield call(getSessionData);
+  const sessionData: SessionData = yield call(getSessionData);
 
   if (sessionData) {
     yield fork(clearSessionData);
   }
 
-  yield put(
-    actions.authState({
-      isAuthorizationed: false,
-    }),
-  );
-
-  yield put(actions.serverData((sessionData = null)));
+  yield put(actions.setInitialStore());
 }
 
 export const sagas = {

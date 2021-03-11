@@ -2,15 +2,15 @@
  * ## Тип входных данных для авторизации
  */
 export type LoginData = {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 };
 
 /**
  * ## Тип состояния формы авторизации
  */
 export type AuthState = {
-  isAuthorizationed?: boolean;
+  isAuth?: boolean;
   isProcessed?: boolean;
   authError?: string;
 };
@@ -23,15 +23,15 @@ export type AccessToken = string;
 /**
  * ## Тип данных авторизации (токен)
  */
-export type ServerData = {
-  accessToken: AccessToken;
-  user: ServerDataUser;
+export type SessionData = {
+  accessToken?: AccessToken;
+  user?: SessionDataUser;
 };
 
 /**
  * ##
  */
-export type ServerDataUser = {
+export type SessionDataUser = {
   [key: string]: any;
 };
 
@@ -40,11 +40,4 @@ export type ServerDataUser = {
  */
 export type TokenData = {
   [key: string]: string | number;
-};
-
-/**
- * ##
- */
-export type ResponseType = {
-  [key: string]: any;
 };

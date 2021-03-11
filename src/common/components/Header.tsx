@@ -6,7 +6,7 @@ import { selectors as authSelectors } from '@features/auth';
 import { HeaderUser } from './HeaderUser';
 
 export const Header: React.FC = () => {
-  const { isAuthorizationed } = useSelector(authSelectors.isAuthorizationed);
+  const { isAuth } = useSelector(authSelectors.isAuth);
 
   return (
     <L.Header className="user-box personal-box">
@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
           />
           EVERNOTE
         </L.A>
-        {isAuthorizationed && (
+        {isAuth && (
           <L.Ul className="menu-h company txt-right txt-small right">
             <L.Li className="level-1">
               <L.Span className="dropdown-wrapper">

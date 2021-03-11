@@ -12,6 +12,7 @@ import jwtDecode from 'jwt-decode';
 
 import { pathOr } from '@common/utils';
 import { uiMessages } from '@common/messages';
+import { AxiosPromise } from 'axios';
 
 import {
   actions as authActions,
@@ -21,9 +22,8 @@ import {
   api as authApi,
   LoginData as AuthLoginData,
   TokenData as AuthTokenData,
-  ServerData as AuthServerData,
+  SessionData as AuthSessionData,
   AccessToken as AuthAccessToken,
-  ResponseType as AuthResponseType,
 } from '@features/auth';
 
 import {
@@ -44,26 +44,23 @@ function* logoutFlow(): Generator {
 /**
  * ## Процесс обработки запроса авторизации
  *
- * @param {object | any} data -
+ * @param {AxiosPromise} data -
  *
  * @returns {void}
  */
-function* loginProcessHandler(data: AuthResponseType): Generator {
-  const serverData: AuthServerData = pathOr(null, ['data'], data);
-  const accessToken: AuthAccessToken = pathOr('', ['accessToken'], serverData);
+function* loginProcessHandler(data: AxiosPromise): Generator {
+  const sessionData: AuthSessionData = pathOr(null, ['data'], data);
+  const accessToken: AuthAccessToken = pathOr('', ['accessToken'], sessionData);
 
   // Записываем токен в стор
-  yield put(authActions.serverData(serverData));
+  yield put(authActions.serverData(sessionData));
 
   // Записываем данные в сессию
-  yield call(authSagas.setSessionData, serverData);
+  yield call(authSagas.setSessionData, sessionData);
 
   if (accessToken) {
     // Парсим JWT токен
-    const tokenPayload: AuthTokenData | any = yield call(
-      jwtDecode,
-      accessToken,
-    );
+    const tokenPayload: AuthTokenData = <AuthTokenData>jwtDecode(accessToken);
 
     /*
      * Получаем данные о том, закончилась ли время жизни токена
@@ -73,14 +70,14 @@ function* loginProcessHandler(data: AuthResponseType): Generator {
 
     // Если токен ещё не просрочен
     if (isLiveToken) {
-      // Редирект на главную страницу
-      yield call(navSagas.navTo, '/');
+      // Редирект на страницу с заметками
+      yield call(navSagas.navTo, '/notes');
 
       // Завершаем процесс
       yield put(
         authActions.authState({
           isProcessed: false,
-          isAuthorizationed: true,
+          isAuth: true,
         }),
       );
 
@@ -98,13 +95,11 @@ function* loginProcessHandler(data: AuthResponseType): Generator {
  *
  * @returns {void}
  */
-function* loginProcess(): Generator {
-  /* TODO Как тправильно написать тип */
-  const user: AuthLoginData | any = yield select(authSelectors.loginData);
+function* loginProcess() {
+  const user: AuthLoginData = yield select(authSelectors.loginData);
 
   try {
-    /* TODO - как правильно писать тип для ответа запроса */
-    const requestData: AuthResponseType = yield call(authApi.login, user);
+    const requestData: AxiosPromise = yield call(authApi.login, user);
 
     yield call(loginProcessHandler, requestData);
   } catch (error) {
@@ -130,35 +125,32 @@ function* loginProcess(): Generator {
  *
  * @returns {void}
  */
-function* autoLoginProcess(): Generator {
+function* autoLoginProcess() {
   // Получаем данные авторизации из сессии
-  const sessionData: string | any = yield call(authSagas.getSessionData);
+  const sessionData: string = yield call(authSagas.getSessionData);
 
   if (!sessionData) {
     yield call(navSagas.navTo, '/auth');
     return;
   }
 
-  const parsedData: AuthServerData = JSON.parse(sessionData);
-  const accessToken: AuthAccessToken = pathOr('', ['accessToken'], parsedData);
+  const parsedData: AuthSessionData = JSON.parse(sessionData);
+  const { accessToken } = parsedData;
 
   // Записываем токен в стор
   yield put(authActions.serverData(parsedData));
 
   // Парсим JWT токен
-  const tokenPayload: AuthTokenData | any = yield call(jwtDecode, accessToken);
+  const tokenPayload: AuthTokenData = <AuthTokenData>jwtDecode(accessToken);
 
-  /*
-   * Получаем данные о том, закончилась ли время жизни токена
-   * и если нет, то сколько ему осталось жить
-   */
+  // Получаем данные о том, закончилась ли время жизни токена, если нет, то сколько ему осталось жить
   const [isLiveToken, delayTime] = authUtils.getTokenExp(tokenPayload);
 
   // Если токен ещё не просрочен
   if (isLiveToken) {
     yield put(
       authActions.authState({
-        isAuthorizationed: true,
+        isAuth: true,
       }),
     );
 

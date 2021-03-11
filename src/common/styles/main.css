@@ -2,6 +2,11 @@ h1 {
   color: black;
   text-align: center;
 }
+
+main > h1 {
+  margin-top: 30px;
+}
+
 .header__user {
   display: flex;
   flex-direction: row;
@@ -34,7 +39,8 @@ h1 {
 }
 
 
-.notes {
+.notes,
+.note__detail {
   margin: 30px auto;
   width: 100%;
   max-width: 1000px;
@@ -78,26 +84,54 @@ h1 {
   font-size: 25px;
 }
 
-.note__caption span {
+.note__caption .info {
   position: absolute;
   top: 0px;
   right: 0px;
 }
 
 .note__desc {
-  height: 85px;
+  min-height: 75px;
 }
 
 .tags {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tags li {
+  margin-top: 10px;
+  margin-right: 10px;
   padding: 3px 10px;
   background-color: #f2f4f7;
   border-radius: 6px;
 }
 
-.tags li:nth-child(n + 2) {
-  margin-left: 10px;
+.tags .btn__all {
+  cursor: pointer;
+  background-color: #107f8c;
+  color: white;
+}
+
+.tags li:last-child {
+  margin-right: 0;
+}
+
+.note__detail {
+  padding: 20px;
+  box-shadow: 0px 0px 6px rgb(0 0 0 / 35%);
+  border-radius: 6px;
+}
+
+.note__detail > div {
+  display: flex;
+}
+
+.note__detail > div:last-child {
+  justify-content: space-between;
+}
+
+.btn__back {
+  margin-top: 10px;
+  margin-right: 20px;
 }

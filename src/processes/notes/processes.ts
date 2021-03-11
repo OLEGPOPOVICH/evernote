@@ -1,23 +1,69 @@
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, select, takeEvery } from 'redux-saga/effects';
-import { logger, pathOr } from '@common/utils';
+import { logger, split } from '@common/utils';
 
-import { actions as notesActions, api as notesApi } from '@features/notes';
+import { actions as notesActions, sagas as notesSagas } from '@features/notes';
 
-import { selectors as authSelectors } from '@features/auth';
+import { actions as authActions, sagas as authSagas } from '@features/auth';
+import { selectors as navSelectors } from '@features/navigation';
+
+/**
+ * Проверка прав доступа
+ *
+ * @returns {void}
+ */
+function* checkAccessRights(): Generator {
+  yield;
+}
 
 /**
  * Инициализация страницы со списком заметок
  *
  * @returns {void}
  */
-function* initNotesPage(): Generator {
+function* loadingNotesPage() {
   try {
-    const { accessToken }: any = yield select(authSelectors.getToken);
-    const requestData = yield call(notesApi.getNotes, accessToken);
-    const notes = pathOr(null, ['data'], requestData);
+    const sessionData: string = yield call(authSagas.getSessionData);
 
-    yield put(notesActions.setNotes(notes));
+    if (sessionData) {
+      yield call(checkAccessRights);
+
+      const { accessToken } = JSON.parse(sessionData);
+
+      yield call(notesSagas.getNotes, accessToken);
+    } else {
+      yield put(authActions.logout());
+
+      // скинуть стор
+    }
+  } catch (err) {
+    logger(err);
+  }
+}
+
+/**
+ * Инициализация детальной страницы списка заметок
+ *
+ * @returns {void}
+ */
+function* loadingNoteDetailPage() {
+  try {
+    const serverData: string = yield call(authSagas.getSessionData);
+
+    if (serverData) {
+      yield call(checkAccessRights);
+
+      const { accessToken } = JSON.parse(serverData);
+      const pathName: string = yield select(navSelectors.pathName);
+      const pathNameArray = split(pathName, '/');
+      const idNote = pathNameArray[pathNameArray.length - 1];
+
+      yield call(notesSagas.getNote, idNote, accessToken);
+    } else {
+      yield put(authActions.logout());
+
+      // скинуть стор
+    }
   } catch (err) {
     logger(err);
   }
@@ -29,5 +75,8 @@ function* initNotesPage(): Generator {
  * @returns {void}
  */
 export function* notesProcessWatcher(): SagaIterator {
-  yield all([takeEvery(notesActions.initNotesPage, initNotesPage)]);
+  yield all([
+    takeEvery(notesActions.loadingNotesPage, loadingNotesPage),
+    takeEvery(notesActions.loadingNoteDetailPage, loadingNoteDetailPage),
+  ]);
 }

@@ -5,7 +5,12 @@ import { History, LocationState } from 'history';
 
 import { MainLayout } from '@layouts';
 
-import { AuthorizationPage, HomePage, NotesPage } from '@pages';
+import {
+  AuthorizationPage,
+  NoteDetailPage,
+  NotesPage,
+  NotFoundPage,
+} from '@pages';
 
 interface AppRoutesProps<S = LocationState> {
   history: History<S>;
@@ -24,8 +29,9 @@ export function AppRoutes<S = LocationState>({
       <MainLayout>
         <Switch>
           <Route path="/auth" component={AuthorizationPage} />
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/notes/detail/:id" component={NoteDetailPage} />
           <Route exact path="/notes" component={NotesPage} />
+          <Route exact path="*" component={NotFoundPage} />
         </Switch>
       </MainLayout>
     </ConnectedRouter>

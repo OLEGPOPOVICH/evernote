@@ -24,7 +24,7 @@ export const MainLayout: React.FC<LayoutProp> = ({ children }) => {
     <GlobalLoader>
       <Header />
       <L.Div className="wrapper">
-        <L.Main className="content-box items margin-y">
+        <L.Main className="content-box items">
           {errorExist ? <ErrorLayout /> : children}
         </L.Main>
       </L.Div>

@@ -42,3 +42,30 @@ export const base64FromArray = (arrayBytes: number[]): string =>
  * @returns {string} срока без пробельных символов в начале и конце строки
  */
 export const trim = (str: string): string => str.trim();
+
+/**
+ * ### Метод обрезает строку по заданному количеству символов
+ *
+ * @param {string} str - строка оригинал
+ * @param {number} limit - кол-во символов
+ * @returns {string} обрезанная строка по заданному количеству символов
+ */
+export const trimString = (str: string, limit?: number): string => {
+  let newStr = str;
+
+  if (limit) {
+    newStr = `${str.substring(0, limit)}...`;
+  }
+
+  return newStr;
+};
+
+/**
+ * ### Метод разбивает строку на массив строк путем разделения строки указанной подстрокой
+ *
+ * @param {string} str - строка оригинал
+ * @param {string} separator - используется в качестве разделителя строки
+ * @returns {Array<string>} массив строк
+ */
+export const split = (str: string, separator: string): Array<string> =>
+  str.split(separator);

@@ -5,16 +5,16 @@ import { config } from '@common/config';
 import { pathOr } from '@common/utils';
 
 import { InitialState } from './ducks';
-import { LoginData, AuthState, ServerDataUser } from './types';
+import { LoginData, AuthState, SessionDataUser, SessionData } from './types';
 
 /**
- * ## [Селектор] Данные по auth
+ * ## [Селектор] Получить данные по авторизации
  */
 const authSelector = (state: RootState): InitialState =>
   state[config.modules.auth];
 
 /**
- * ## [Селектор] Данные о логине и пароле
+ * ## [Селектор] Получить данные о логине и пароле
  */
 const loginData = createSelector(
   authSelector,
@@ -25,7 +25,7 @@ const loginData = createSelector(
 );
 
 /**
- * ## [Селектор] Состояние процесса авторизации
+ * ## [Селектор] Получить состояние процесса авторизации
  */
 const isProcessed = createSelector(
   authSelector,
@@ -35,17 +35,17 @@ const isProcessed = createSelector(
 );
 
 /**
- * ## [Селектор] Состояние авторизации
+ * ## [Селектор] Получить состояние авторизации
  */
-const isAuthorizationed = createSelector(
+const isAuth = createSelector(
   authSelector,
   (auth: InitialState): AuthState => ({
-    isAuthorizationed: pathOr(false, ['isAuthorizationed'], auth),
+    isAuth: pathOr(false, ['isAuth'], auth),
   }),
 );
 
 /**
- * ## [Селектор] Текст ошибки авторизации
+ * ## [Селектор] Получить текст ошибки авторизации
  */
 const authError = createSelector(
   authSelector,
@@ -59,7 +59,7 @@ const authError = createSelector(
  */
 const authUser = createSelector(
   authSelector,
-  (auth: InitialState): ServerDataUser => ({
+  (auth: InitialState): SessionDataUser => ({
     user: pathOr({}, ['serverData', 'user'], auth),
   }),
 );
@@ -67,15 +67,18 @@ const authUser = createSelector(
 /**
  * ## [Селектор] Получения токена
  */
-const getToken = createSelector(authSelector, (auth: InitialState): any => ({
-  accessToken: pathOr(null, ['serverData', 'accessToken'], auth),
-}));
+const getToken = createSelector(
+  authSelector,
+  (auth: InitialState): SessionData => ({
+    accessToken: pathOr(null, ['serverData', 'accessToken'], auth),
+  }),
+);
 
 export const selectors = {
   loginData,
   isProcessed,
   authError,
-  isAuthorizationed,
+  isAuth,
   authUser,
   getToken,
 };
