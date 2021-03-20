@@ -1,7 +1,7 @@
 import { createHttpClient } from '@common/utils';
 import { AccessToken as AuthAccessToken } from '@features/auth';
 import { AxiosPromise } from 'axios';
-import { NoteItemType } from './types';
+import { ConfigType, NoteItemType } from './types';
 
 const request = createHttpClient();
 
@@ -9,11 +9,17 @@ const request = createHttpClient();
  * ## Получить список заметок
  *
  * @param {AuthAccessToken} token Токен
+ * @param {ConfigType} config -
  *
  * @returns {AxiosPromise} Результат ответа от сервера
  */
-const getNotes = (token: AuthAccessToken): AxiosPromise =>
-  request.get({ url: 'notes', headers: { Authorization: token }, version: '' });
+const getNotes = (token: AuthAccessToken, config: ConfigType): AxiosPromise =>
+  request.get({
+    url: 'notes',
+    headers: { Authorization: token },
+    version: '',
+    config: { ...config },
+  });
 
 /**
  * ## Получить заметку

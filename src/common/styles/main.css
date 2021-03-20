@@ -107,10 +107,23 @@ main > h1 {
   border-radius: 6px;
 }
 
-.tags .btn__all {
+.tags li.active {
+  background-color: #ff9900;
+}
+
+.tags .tag-link {
   cursor: pointer;
+}
+
+.tags li.active a,
+.tags li.active span {
+  color: white;
+}
+
+.tags .btn__all {
   background-color: #107f8c;
   color: white;
+  cursor: pointer;
 }
 
 .tags li:last-child {

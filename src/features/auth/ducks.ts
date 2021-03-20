@@ -70,7 +70,7 @@ const setAuthData = (
   { payload }: PayloadAction<SessionData>,
 ): InitialState => ({
   ...state,
-  ...{ serverData: payload },
+  serverData: payload,
 });
 
 /**

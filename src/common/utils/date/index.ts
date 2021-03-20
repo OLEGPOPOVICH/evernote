@@ -19,7 +19,7 @@ type DateFormat = {
  * dateFormat({data, format, locale}) / Sunday, 28.02.2021, 20:05:38
  *
  *
- * @param {any} date текущая дата
+ * @param {unknown} date текущая дата
  * @param {string} format формат даты
  * @param {string} locale локаль (default locale: 'ru')
  *

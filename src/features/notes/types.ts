@@ -1,5 +1,3 @@
-import { TagType } from '@common/components/Tags';
-
 export type NoteItemType = {
   id?: string;
   title?: string;
@@ -7,13 +5,23 @@ export type NoteItemType = {
   imgUrl?: string;
   date?: string;
   views?: number;
-  tags?: TagType[];
+  tags?: string[];
 };
 
 export type NotesType = {
   notes: NoteItemType[];
+  queryStr?: string;
 };
 
 export type NoteType = {
   note: NoteItemType;
+  queryStr?: string;
+};
+
+export type ActiveTagType = {
+  activeTag: string;
+};
+
+export type ConfigType = {
+  [key: string]: string;
 };

@@ -96,10 +96,10 @@ function* loginProcessHandler(data: AxiosPromise): Generator {
  * @returns {void}
  */
 function* loginProcess() {
-  const user: AuthLoginData = yield select(authSelectors.loginData);
+  const data: AuthLoginData = yield select(authSelectors.loginData);
 
   try {
-    const requestData: AxiosPromise = yield call(authApi.login, user);
+    const requestData: AxiosPromise = yield call(authApi.login, data);
 
     yield call(loginProcessHandler, requestData);
   } catch (error) {

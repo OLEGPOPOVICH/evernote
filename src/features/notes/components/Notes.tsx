@@ -13,6 +13,7 @@ import { NoteItemType, NotesType } from '../types';
  */
 export const Notes: React.FC<NotesType> = ({
   notes,
+  queryStr,
 }: NotesType): JSX.Element => {
   /**
    * ## Метод редеринга списка заметок
@@ -20,7 +21,9 @@ export const Notes: React.FC<NotesType> = ({
    * @returns {JSX.Element} Список заметок
    */
   function renderNote() {
-    return notes.map((note: NoteItemType) => <Note {...note} key={note.id} />);
+    return notes.map((note: NoteItemType) => (
+      <Note note={note} queryStr={queryStr} key={note.id} />
+    ));
   }
 
   return <L.Ul className="notes">{notes ? renderNote() : null}</L.Ul>;

@@ -1,7 +1,7 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { config } from '@common/config';
-import { NoteItemType, NotesType, NoteType } from './types';
+import { ActiveTagType, NoteItemType, NotesType, NoteType } from './types';
 
 const LOADING_NOTES_PAGE = 'LOADING_NOTES_PAGE';
 const LOADING_NOTE_DETAIL_PAGE = 'LOADING_NOTE_DETAIL_PAGE';
@@ -11,6 +11,13 @@ const actionLoadingNoteDetailPage = createAction(LOADING_NOTE_DETAIL_PAGE);
 export type InitialState = {
   notes: NoteItemType[];
   note: NoteItemType;
+  activeTag: string;
+};
+
+export type ClearElemType = {
+  notes?: NoteItemType[];
+  note?: NoteItemType;
+  activeTag?: string;
 };
 
 const initialState: InitialState = {
@@ -24,6 +31,7 @@ const initialState: InitialState = {
     views: 0,
     tags: [],
   },
+  activeTag: '',
 };
 
 /**
@@ -72,11 +80,40 @@ const updateNote = (
 });
 
 /**
+ * ## [Экшин] Установить активный тег
+ *
+ * @param {InitialState} state Состояние модуля
+ *
+ * @returns {void}
+ */
+const setActiveTag = (
+  state: InitialState,
+  { payload }: PayloadAction<ActiveTagType>,
+): InitialState => ({
+  ...state,
+  ...payload,
+});
+
+/**
+ * ## [Экшин] Очистить элемент состояния модуля
+ *
+ * @param {InitialState} state Состояние модуля
+ *
+ * @returns {void}
+ */
+const clearElemState = (
+  state: InitialState,
+  { payload }: PayloadAction<ClearElemType>,
+): InitialState => ({
+  ...state,
+  ...payload,
+});
+
+/**
  * ## [Экшин] сброс стора
  *
  * @returns {void}
  */
-
 const setInitialStore = () => initialState;
 
 const loginSlice = createSlice({
@@ -85,8 +122,10 @@ const loginSlice = createSlice({
   reducers: {
     setNotes,
     setNote,
-    updateNote,
     setInitialStore,
+    setActiveTag,
+    updateNote,
+    clearElemState,
   },
 });
 

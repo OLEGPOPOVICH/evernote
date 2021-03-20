@@ -9,6 +9,6 @@ export {
   trimString,
   split,
 } from './strings';
-export { pathOr } from './objects';
+export { pathOr, objsToQueryParams } from './objects';
 export { logger } from './logger';
 export { dateFormat } from './date';

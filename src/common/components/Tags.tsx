@@ -1,25 +1,53 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useCallback, useState } from 'react';
 import * as L from '@korus/leda';
-import { Link } from 'react-router-dom';
+import { history } from '@store';
 
-export type TagType = {
-  name: string;
-  href: string;
+export type ParamsType = {
+  show: number;
+  activeTag: string;
+  query: string;
 };
 
 export type TagsType = {
-  tags: Array<TagType>;
+  tags: string[];
+  params: ParamsType;
+  onClick?: (tag: string) => void;
 };
 
 /**
  * ## Компонент список тегов
  *
- * @param {TagsType} tags Список тегов
+ * @param {string[]} tags Список тегов
  *
  * @returns {JSX.Element} Компонент список тегов
  */
-export const Tags: React.FC<TagsType> = ({ tags }: TagsType): JSX.Element => {
+export const Tags: React.FC<TagsType> = ({
+  tags,
+  params,
+  onClick,
+}: TagsType): JSX.Element => {
   const [allTags, setAllTags] = useState(false);
+  const { show, activeTag, query } = params;
+
+  const onClickHandler = useCallback(
+    (tag: string) => {
+      const tagState = activeTag === tag ? '' : tag;
+
+      if (tagState) {
+        history.push({
+          search: `${query}=${tagState}`,
+        });
+      } else {
+        history.push({
+          search: '',
+        });
+      }
+
+      onClick(tagState);
+    },
+    [activeTag],
+  );
+
   /**
    * ## Метод редеринга списка тегов
    *
@@ -27,10 +55,16 @@ export const Tags: React.FC<TagsType> = ({ tags }: TagsType): JSX.Element => {
    */
   function renderTags() {
     return tags.map(
-      (tag: TagType, index: number) =>
-        (allTags || index + 1 <= 3) && (
-          <L.Li key={tag.name}>
-            <Link to={tag.href}>{tag.name}</Link>
+      (tag: string, index: number): ReactElement =>
+        (allTags || index + 1 <= show) && (
+          <L.Li key={tag} className={params.activeTag === tag && 'active'}>
+            {onClick ? (
+              <L.Span className="tag-link" onClick={() => onClickHandler(tag)}>
+                {tag}
+              </L.Span>
+            ) : (
+              <L.Span>{tag}</L.Span>
+            )}
           </L.Li>
         ),
     );
@@ -39,7 +73,7 @@ export const Tags: React.FC<TagsType> = ({ tags }: TagsType): JSX.Element => {
   return (
     <L.Ul className="tags padding-none">
       {tags && renderTags()}
-      {tags.length && !allTags ? (
+      {tags.length > params.show && !allTags ? (
         <L.Li className="btn__all" onClick={() => setAllTags(true)}>
           Все
         </L.Li>

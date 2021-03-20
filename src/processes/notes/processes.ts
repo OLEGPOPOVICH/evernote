@@ -8,12 +8,18 @@ import { actions as authActions, sagas as authSagas } from '@features/auth';
 import { selectors as navSelectors } from '@features/navigation';
 
 /**
- * Проверка прав доступа
+ * Установка активного тега
  *
  * @returns {void}
  */
-function* checkAccessRights(): Generator {
-  yield;
+function* setActiveTag() {
+  const params = yield select(navSelectors.queryParams);
+
+  if (params.tags_like) {
+    yield put(notesActions.setActiveTag({ activeTag: params.tags_like }));
+  } else {
+    yield put(notesActions.setActiveTag({ activeTag: '' }));
+  }
 }
 
 /**
@@ -23,20 +29,25 @@ function* checkAccessRights(): Generator {
  */
 function* loadingNotesPage() {
   try {
-    const sessionData: string = yield call(authSagas.getSessionData);
+    // Проверка прав доступа пользователя
+    yield call(authSagas.checkAuthAccess);
 
-    if (sessionData) {
-      yield call(checkAccessRights);
+    // Получаем заголовки для запроса
+    const sessionData = yield call(authSagas.getSessionData);
 
-      const { accessToken } = JSON.parse(sessionData);
+    const { accessToken } = JSON.parse(sessionData);
 
-      yield call(notesSagas.getNotes, accessToken);
-    } else {
-      yield put(authActions.logout());
+    const params = yield select(navSelectors.queryParams);
+    const config = {
+      params,
+    };
 
-      // скинуть стор
-    }
+    yield call(setActiveTag);
+
+    yield call(notesSagas.getNotes, accessToken, config);
   } catch (err) {
+    yield put(authActions.logout());
+
     logger(err);
   }
 }
@@ -48,23 +59,22 @@ function* loadingNotesPage() {
  */
 function* loadingNoteDetailPage() {
   try {
-    const serverData: string = yield call(authSagas.getSessionData);
+    // Проверка прав доступа пользователя
+    yield call(authSagas.checkAuthAccess);
 
-    if (serverData) {
-      yield call(checkAccessRights);
+    // Получаем заголовки для запроса
+    const sessionData = yield call(authSagas.getSessionData);
 
-      const { accessToken } = JSON.parse(serverData);
-      const pathName: string = yield select(navSelectors.pathName);
-      const pathNameArray = split(pathName, '/');
-      const idNote = pathNameArray[pathNameArray.length - 1];
+    const { accessToken } = JSON.parse(sessionData);
+    const pathName: string = yield select(navSelectors.pathName);
+    const pathNameArray = split(pathName, '/');
+    const idNote = pathNameArray[pathNameArray.length - 1];
 
-      yield call(notesSagas.getNote, idNote, accessToken);
-    } else {
-      yield put(authActions.logout());
+    yield call(setActiveTag);
 
-      // скинуть стор
-    }
+    yield call(notesSagas.getNote, idNote, accessToken);
   } catch (err) {
+    yield put(authActions.logout());
     logger(err);
   }
 }

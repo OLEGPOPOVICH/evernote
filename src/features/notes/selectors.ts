@@ -5,7 +5,7 @@ import { config } from '@common/config';
 import { pathOr } from '@common/utils';
 
 import { InitialState } from './ducks';
-import { NotesType, NoteType } from './types';
+import { ActiveTagType, NotesType, NoteType } from './types';
 
 /**
  * ## [Селектор] Получить данные по заметкам
@@ -33,7 +33,18 @@ const getNote = createSelector(
   }),
 );
 
+/**
+ * ## [Селектор] Получить активный тег
+ */
+const getActiveTag = createSelector(
+  notesSelector,
+  (notes: InitialState): ActiveTagType => ({
+    activeTag: pathOr('', ['activeTag'], notes),
+  }),
+);
+
 export const selectors = {
   getNotes,
   getNote,
+  getActiveTag,
 };

@@ -52,7 +52,25 @@ function* getSessionData(): Generator {
  * @returns {void}
  */
 function* clearSessionData(): Generator {
-  yield apply(sessionStorage, sessionStorage.removeItem, ['serverData']);
+  yield apply(sessionStorage, sessionStorage.removeItem, ['sessionData']);
+}
+
+/**
+ * ## Процесс проверки прав доступа к ресурсу
+ *
+ * @returns {void}
+ */
+function* checkAuthAccess(): Generator {
+  // Получаем данные о токене
+  const sessionData = yield call(getSessionData);
+
+  /*
+   * TODO
+   * Если данных о сессии нет
+   */
+  if (!sessionData) {
+    throw new Error('Error');
+  }
 }
 
 /**
@@ -75,4 +93,5 @@ export const sagas = {
   setSessionData,
   getSessionData,
   logoutSaga,
+  checkAuthAccess,
 };
