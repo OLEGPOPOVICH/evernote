@@ -6,3 +6,5 @@ src/**/*.test.js
 src/**/*.test.jsx
 src/**/*.test.tsx
 src/**/*.test.ts
+src/stories/**/*.ts
+src/stories/**/*.tsx

@@ -23,7 +23,9 @@
     "updateKorusUI": "npm run createBranch && npm run updateDependencies && npm run build && npm run commitUpdate && npm run openMR",
     "genChangelog": "change-gen gen",
     "db:faker": "node ./server/faker.ts",
-    "server:start": "npm run db:faker && node ./server/server.js"
+    "server:start": "npm run db:faker && node ./server/server.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -43,6 +45,7 @@
   "dependencies": {
     "@korus/leda": "^3.34.0",
     "@reduxjs/toolkit": "^1.3.4",
+    "@storybook/addon-knobs": "^6.3.1",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
@@ -83,6 +86,10 @@
     "@babel/preset-typescript": "^7.10.4",
     "@jest/transform": "^26.1.0",
     "@jest/types": "^26.1.0",
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/react": "^6.3.12",
     "@types/classnames": "^2.2.10",
     "@types/faker": "^5.1.7",
     "@types/jest": "^26.0.5",
