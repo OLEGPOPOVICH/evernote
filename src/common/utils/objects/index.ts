@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Path, pathOr as pathOrRamda } from 'ramda';
 
 type ObjectProps = {

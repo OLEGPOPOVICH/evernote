@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable valid-jsdoc */
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as L from '@korus/leda';
@@ -10,24 +12,24 @@ import {
   LoginData as AuthLoginData,
   selectors as authSelectors,
 } from '@features/auth';
+import { ErrorLayout, selectors as errorSelectors } from '@features/errors';
 
 /**
  * ## Компонент страницы авторизации
- *
- * @returns {JSX.Element} Компонент страницы авторизации
  */
-export const AuthorizationPage: React.FC = (): JSX.Element => {
+export const AuthorizationPage = () => {
   const dispatch = useDispatch();
   const { isProcessed } = useSelector(authSelectors.isProcessed);
   const { authError } = useSelector(authSelectors.authError);
+  const isErrorExist = useSelector(errorSelectors.isErrorExist);
 
   /**
    * ## Обработчик формы авторизации
    *
-   * @param {boolean} props.email Email пользователя
+   * @param {string} props.email Email пользователя
    * @param {string} props.password Пароль пользователя
    */
-  const formLoginHandler = useCallback(
+  const handleSubmit = useCallback(
     ({ email, password }: AuthLoginData): void => {
       dispatch(
         authActions.login({
@@ -39,6 +41,10 @@ export const AuthorizationPage: React.FC = (): JSX.Element => {
     [],
   );
 
+  if (isErrorExist) {
+    return <ErrorLayout />;
+  }
+
   return (
     <L.Div>
       <L.Div className="box width-50 margin-auto padding-large">
@@ -46,7 +52,7 @@ export const AuthorizationPage: React.FC = (): JSX.Element => {
           {uiMessages.titleAuthlogin}
         </L.H2>
         <AuthLoginForm
-          onSubmit={formLoginHandler}
+          onSubmit={handleSubmit}
           isProcessed={isProcessed}
           authError={authError}
         />

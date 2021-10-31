@@ -12,7 +12,7 @@ export const ErrorLayout: React.FC = () => {
   return (
     <>
       <L.H1>{title}</L.H1>
-      <L.P>{`${code} - ${message}`}</L.P>
+      <L.Div className="content-bo txt-center">{`${code} - ${message}`}</L.Div>
     </>
   );
 };

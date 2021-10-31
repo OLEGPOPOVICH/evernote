@@ -22,7 +22,7 @@ export const NoteDetailPage: React.FC = (): JSX.Element => {
     dispatch(notesActions.loadingNoteDetailPage());
 
     return () => {
-      dispatch(notesActions.setInitialStore());
+      dispatch(notesActions.clearElemState({ note }));
     };
   }, [dispatch]);
 

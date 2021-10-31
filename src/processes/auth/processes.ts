@@ -1,3 +1,4 @@
+/* eslint-disable valid-jsdoc */
 import { SagaIterator } from 'redux-saga';
 import {
   all,
@@ -12,7 +13,6 @@ import jwtDecode from 'jwt-decode';
 
 import { pathOr } from '@common/utils';
 import { uiMessages } from '@common/messages';
-import { AxiosPromise } from 'axios';
 
 import {
   actions as authActions,
@@ -20,10 +20,8 @@ import {
   sagas as authSagas,
   utils as authUtils,
   api as authApi,
-  LoginData as AuthLoginData,
   TokenData as AuthTokenData,
-  SessionData as AuthSessionData,
-  AccessToken as AuthAccessToken,
+  AuthData,
 } from '@features/auth';
 
 import {
@@ -31,10 +29,10 @@ import {
   selectors as navSelectors,
 } from '@features/navigation';
 
+import { actions as errorActions } from '@features/errors';
+
 /**
  * ## Процесс разлогирование
- *
- * @returns {void}
  */
 function* logoutFlow(): Generator {
   yield fork(authSagas.logoutSaga);
@@ -43,24 +41,19 @@ function* logoutFlow(): Generator {
 
 /**
  * ## Процесс обработки запроса авторизации
- *
- * @param {AxiosPromise} data -
- *
- * @returns {void}
  */
-function* loginProcessHandler(data: AxiosPromise): Generator {
-  const sessionData: AuthSessionData = pathOr(null, ['data'], data);
-  const accessToken: AuthAccessToken = pathOr('', ['accessToken'], sessionData);
+function* loginProcessHandler(data: AuthData): Generator {
+  const accessToken = pathOr('', ['accessToken'], data);
 
-  // Записываем токен в стор
-  yield put(authActions.serverData(sessionData));
+  // Записываем токен и данные пользователя в стор
+  yield put(authActions.setAuthData(data));
 
   // Записываем данные в сессию
-  yield call(authSagas.setSessionData, sessionData);
+  yield call(authSagas.setSessionData, data);
 
   if (accessToken) {
     // Парсим JWT токен
-    const tokenPayload: AuthTokenData = <AuthTokenData>jwtDecode(accessToken);
+    const tokenPayload = <AuthTokenData>jwtDecode(accessToken);
 
     /*
      * Получаем данные о том, закончилась ли время жизни токена
@@ -75,12 +68,12 @@ function* loginProcessHandler(data: AxiosPromise): Generator {
 
       // Завершаем процесс
       yield put(
-        authActions.authState({
+        authActions.setAuthState({
+          password: '',
           isProcessed: false,
           isAuth: true,
         }),
       );
-
       // Ждем когда токен истечет
       yield delay(delayTime);
     }
@@ -92,28 +85,25 @@ function* loginProcessHandler(data: AxiosPromise): Generator {
 
 /**
  * ## Процесс авторизации
- *
- * @returns {void}
  */
 function* loginProcess() {
-  const data: AuthLoginData = yield select(authSelectors.loginData);
-
   try {
-    const requestData: AxiosPromise = yield call(authApi.login, data);
+    const loginData = yield select(authSelectors.loginData);
+    const requestData = yield call(authApi.login, loginData);
 
-    yield call(loginProcessHandler, requestData);
-  } catch (error) {
-    if (error.message === 'Request failed with status code 401') {
-      // Выводим ошибку авторизации
-      yield call(
-        authSagas.setErrorMessageSaga,
-        uiMessages.requestError.incorrectLoginOrPassword,
-      );
+    if (requestData.status === 'ok') {
+      yield call(loginProcessHandler, requestData.data);
     }
+
+    if (requestData.status === 'error') {
+      yield call(authSagas.setErrorMessageSaga, requestData.message);
+    }
+  } catch (error) {
+    yield put(errorActions.setError(uiMessages.serverError(503)));
   } finally {
     // Завершаем процесс
     yield put(
-      authActions.authState({
+      authActions.setAuthState({
         isProcessed: false,
       }),
     );
@@ -122,26 +112,24 @@ function* loginProcess() {
 
 /**
  * ## Процесс авторизации при обновлении страницы или первом запуске сервиса
- *
- * @returns {void}
  */
 function* autoLoginProcess() {
   // Получаем данные авторизации из сессии
-  const sessionData: string = yield call(authSagas.getSessionData);
+  const sessionData = yield call(authSagas.getSessionData);
 
   if (!sessionData) {
     yield call(navSagas.navTo, '/auth');
     return;
   }
 
-  const parsedData: AuthSessionData = JSON.parse(sessionData);
+  const parsedData = JSON.parse(sessionData);
   const { accessToken } = parsedData;
 
   // Записываем токен в стор
-  yield put(authActions.serverData(parsedData));
+  yield put(authActions.setAuthData(parsedData));
 
   // Парсим JWT токен
-  const tokenPayload: AuthTokenData = <AuthTokenData>jwtDecode(accessToken);
+  const tokenPayload = <AuthTokenData>jwtDecode(accessToken);
 
   // Получаем данные о том, закончилась ли время жизни токена, если нет, то сколько ему осталось жить
   const [isLiveToken, delayTime] = authUtils.getTokenExp(tokenPayload);
@@ -149,7 +137,7 @@ function* autoLoginProcess() {
   // Если токен ещё не просрочен
   if (isLiveToken) {
     yield put(
-      authActions.authState({
+      authActions.setAuthState({
         isAuth: true,
       }),
     );
@@ -170,8 +158,6 @@ function* autoLoginProcess() {
 
 /**
  * ## Вотчер процесса авторизации
- *
- * @returns {void}
  */
 export function* loginProcessWatcher(): SagaIterator {
   yield all([

@@ -6,7 +6,7 @@ import { config } from '@common/config';
 export type ErrorsState = {
   title: string;
   message: string;
-  code?: string;
+  code?: number | string;
 } | null;
 
 const initialState: ErrorsState = null;

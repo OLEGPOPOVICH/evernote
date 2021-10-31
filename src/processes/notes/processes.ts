@@ -1,8 +1,13 @@
+/* eslint-disable no-underscore-dangle */
 import { SagaIterator } from 'redux-saga';
 import { all, call, put, select, takeEvery } from 'redux-saga/effects';
 import { logger, split } from '@common/utils';
 
-import { actions as notesActions, sagas as notesSagas } from '@features/notes';
+import {
+  actions as notesActions,
+  sagas as notesSagas,
+  selectors as notesSelectors,
+} from '@features/notes';
 
 import { actions as authActions, sagas as authSagas } from '@features/auth';
 import { selectors as navSelectors } from '@features/navigation';
@@ -34,10 +39,15 @@ function* loadingNotesPage() {
 
     // Получаем заголовки для запроса
     const sessionData = yield call(authSagas.getSessionData);
-
     const { accessToken } = JSON.parse(sessionData);
 
+    const { currentPage } = yield select(notesSelectors.getCurrentPage);
+    const { pageLimit } = yield select(notesSelectors.getPageLimit);
+
     const params = yield select(navSelectors.queryParams);
+    params._page = currentPage;
+    params._limit = pageLimit;
+
     const config = {
       params,
     };
@@ -45,10 +55,12 @@ function* loadingNotesPage() {
     yield call(setActiveTag);
 
     yield call(notesSagas.getNotes, accessToken, config);
-  } catch (err) {
-    yield put(authActions.logout());
+  } catch (error) {
+    logger(error);
 
-    logger(err);
+    if (error.message === 'Request failed with status code 401') {
+      yield put(authActions.toLogout());
+    }
   }
 }
 
@@ -73,9 +85,12 @@ function* loadingNoteDetailPage() {
     yield call(setActiveTag);
 
     yield call(notesSagas.getNote, idNote, accessToken);
-  } catch (err) {
-    yield put(authActions.logout());
-    logger(err);
+  } catch (error) {
+    logger(error);
+
+    if (error.message === 'Request failed with status code 401') {
+      yield put(authActions.toLogout());
+    }
   }
 }
 

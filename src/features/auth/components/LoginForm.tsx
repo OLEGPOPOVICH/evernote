@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable prettier/prettier */
+/* eslint-disable valid-jsdoc */
 import React, { useCallback, useState } from 'react';
 import * as L from '@korus/leda';
 
@@ -19,15 +22,14 @@ type LoginFormType = {
  * @param {Boolean} props.isProcessed Состояние процесса авторизации
  * @param {String} props.authError Текст ошибки авторизации
  *
- * @returns {JSX.Element} Компонент формы авторизации
  */
-export const LoginForm: React.FC<LoginFormType> = ({
+export const LoginForm = ({
   onSubmit,
   isProcessed,
   authError,
-}: LoginFormType): JSX.Element => {
-  const [email, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+}: LoginFormType) => {
+  const [email, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const submitHandler = useCallback((): void => {
     onSubmit({
@@ -47,7 +49,9 @@ export const LoginForm: React.FC<LoginFormType> = ({
           form="loginForm"
           name="email"
           value={email}
-          onChange={(event) => setLogin(event.component.value)}
+          onChange={(event: L.InputTypes.ChangeEvent) =>
+            setLogin(event.component.value)
+          }
           isDisabled={isProcessed}
           isRequired
         />
@@ -59,7 +63,9 @@ export const LoginForm: React.FC<LoginFormType> = ({
           form="loginForm"
           name="password"
           value={password}
-          onChange={(event) => setPassword(event.component.value)}
+          onChange={(event: L.InputTypes.ChangeEvent) =>
+            setPassword(event.component.value)
+          }
           isDisabled={isProcessed}
           isRequired
         />
