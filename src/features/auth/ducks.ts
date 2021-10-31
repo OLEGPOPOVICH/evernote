@@ -1,12 +1,15 @@
 import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import { config } from '@common/config';
-import { LoginData, AuthState, SessionData } from './types';
+import {
+  LoginData,
+  AuthState,
+  AuthData,
+  AccessToken,
+  UserLogin,
+} from './types';
 
-const AUTO_LOGIN = 'AUTO_LOGIN';
-const AUTH_LOGOUT = 'AUTH_LOGOUT';
-const actionAutoLogin = createAction(AUTO_LOGIN);
-const actionLogout = createAction(AUTH_LOGOUT);
+const actionAutoLogin = createAction('AUTO_LOGIN');
+const actionLogout = createAction('AUTH_LOGOUT');
 
 export type InitialState = {
   email: string;
@@ -14,7 +17,10 @@ export type InitialState = {
   isAuth: boolean;
   isProcessed: boolean;
   authError: string;
-  serverData: SessionData;
+  authData: {
+    accessToken: AccessToken;
+    user: UserLogin;
+  };
 };
 
 const initialState: InitialState = {
@@ -23,17 +29,20 @@ const initialState: InitialState = {
   isAuth: false,
   isProcessed: false,
   authError: '',
-  serverData: null,
+  authData: {
+    accessToken: null,
+    user: {
+      id: null,
+      avatar: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
+  },
 };
 
-/**
- * ## [Экшин] Записать данные пользователя для авторизации в стор
- *
- * @param {InitialState} state - Состояние модуля
- *
- * @returns {void}
- */
-const setLogin = (
+// [Экшин] Записать данные пользователя для авторизации в стор
+const login = (
   state: InitialState,
   { payload }: PayloadAction<LoginData>,
 ): InitialState => ({
@@ -43,13 +52,10 @@ const setLogin = (
   authError: '',
 });
 
-/**
- * ## [Экшин] Записать состояние формы авторизации в стор
- *
- * @param {InitialState} state - Состояние модуля
- *
- * @returns {void}
- */
+// [Экшин] сброс стора
+const toLogout = () => initialState;
+
+// [Экшин] Записать состояние формы авторизации в стор
 const setAuthState = (
   state: InitialState,
   { payload }: PayloadAction<AuthState>,
@@ -58,43 +64,29 @@ const setAuthState = (
   ...payload,
 });
 
-/**
- * ## [Экшин] Записать токен и авторизованного пользователя в стор
- *
- * @param {InitialState} state - Состояние модуля
- *
- * @returns {void}
- */
+// [Экшин] Записать токен и авторизованного пользователя в стор
 const setAuthData = (
   state: InitialState,
-  { payload }: PayloadAction<SessionData>,
+  { payload }: PayloadAction<AuthData>,
 ): InitialState => ({
   ...state,
-  serverData: payload,
+  authData: payload,
 });
 
-/**
- * ## [Экшин] сброс стора
- *
- * @returns {void}
- */
-
-const setInitialStore = () => initialState;
-
-const loginSlice = createSlice({
+const authSlice = createSlice({
   name: config.modules.auth,
   initialState,
   reducers: {
-    login: setLogin,
-    authState: setAuthState,
-    serverData: setAuthData,
-    setInitialStore,
+    login,
+    toLogout,
+    setAuthState,
+    setAuthData,
   },
 });
 
-export const authReducer = loginSlice.reducer;
+export const authReducer = authSlice.reducer;
 export const actions = {
-  ...loginSlice.actions,
+  ...authSlice.actions,
   autoLogin: actionAutoLogin,
   logout: actionLogout,
 };

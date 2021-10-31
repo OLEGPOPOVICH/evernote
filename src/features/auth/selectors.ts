@@ -5,7 +5,7 @@ import { config } from '@common/config';
 import { pathOr } from '@common/utils';
 
 import { InitialState } from './ducks';
-import { LoginData, AuthState, SessionDataUser, SessionData } from './types';
+import { LoginData, AuthState, AccessTokenData, UserLoginData } from './types';
 
 /**
  * ## [Селектор] Получить данные по авторизации
@@ -59,8 +59,18 @@ const authError = createSelector(
  */
 const authUser = createSelector(
   authSelector,
-  (auth: InitialState): SessionDataUser => ({
-    user: pathOr({}, ['serverData', 'user'], auth),
+  (auth: InitialState): UserLoginData => ({
+    user: pathOr(
+      {
+        id: null,
+        avatar: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+      },
+      ['authData', 'user'],
+      auth,
+    ),
   }),
 );
 
@@ -69,8 +79,8 @@ const authUser = createSelector(
  */
 const getToken = createSelector(
   authSelector,
-  (auth: InitialState): SessionData => ({
-    accessToken: pathOr(null, ['serverData', 'accessToken'], auth),
+  (auth: InitialState): AccessTokenData => ({
+    accessToken: pathOr(null, ['authData', 'accessToken'], auth),
   }),
 );
 

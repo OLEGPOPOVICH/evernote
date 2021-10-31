@@ -8,7 +8,10 @@ export { AuthError } from './AuthError';
 export {
   LoginData,
   AuthState,
-  SessionData,
+  AuthData,
   TokenData,
   AccessToken,
+  AccessTokenData,
+  UserLogin,
+  UserLoginData,
 } from './types';

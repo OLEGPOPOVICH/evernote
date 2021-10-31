@@ -1,7 +1,7 @@
 import { apply, call, fork, put } from 'redux-saga/effects';
 
 import { actions } from './ducks';
-import { SessionData } from './types';
+import { AuthData } from './types';
 
 /**
  * ## Процесс установки сообщения об ошибке при авторизации
@@ -12,7 +12,7 @@ import { SessionData } from './types';
  */
 function* setErrorMessageSaga(message = ''): Generator {
   yield put(
-    actions.authState({
+    actions.setAuthState({
       authError: message,
       isProcessed: false,
     }),
@@ -22,13 +22,13 @@ function* setErrorMessageSaga(message = ''): Generator {
 /**
  * ## Процесс записи данных авторизации в сессию
  *
- * @param {SessionData} data Инфа о токене и пользователе
+ * @param {AuthData} data Инфа о токене и пользователе
  *
  * @returns {void}
  */
-function* setSessionData(data: SessionData): Generator {
+function* setSessionData(data: AuthData): Generator {
   yield apply(sessionStorage, sessionStorage.setItem, [
-    'sessionData',
+    'authData',
     JSON.stringify(data),
   ]);
 }
@@ -40,7 +40,7 @@ function* setSessionData(data: SessionData): Generator {
  */
 function* getSessionData(): Generator {
   const sessionData = yield apply(sessionStorage, sessionStorage.getItem, [
-    'sessionData',
+    'authData',
   ]);
 
   return sessionData;
@@ -52,7 +52,7 @@ function* getSessionData(): Generator {
  * @returns {void}
  */
 function* clearSessionData(): Generator {
-  yield apply(sessionStorage, sessionStorage.removeItem, ['sessionData']);
+  yield apply(sessionStorage, sessionStorage.removeItem, ['authData']);
 }
 
 /**
@@ -64,12 +64,9 @@ function* checkAuthAccess(): Generator {
   // Получаем данные о токене
   const sessionData = yield call(getSessionData);
 
-  /*
-   * TODO
-   * Если данных о сессии нет
-   */
+  // Если данных о сессии нет
   if (!sessionData) {
-    throw new Error('Error');
+    throw new Error('Request failed with status code 401');
   }
 }
 
@@ -79,13 +76,13 @@ function* checkAuthAccess(): Generator {
  * @returns {void}
  */
 function* logoutSaga(): Generator {
-  const sessionData: SessionData = yield call(getSessionData);
+  const sessionData = yield call(getSessionData);
 
   if (sessionData) {
     yield fork(clearSessionData);
   }
 
-  yield put(actions.setInitialStore());
+  yield put(actions.toLogout());
 }
 
 export const sagas = {
