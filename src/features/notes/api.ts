@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { createHttpClient } from '@common/utils';
 import { AccessToken as AuthAccessToken } from '@features/auth';
 import { AxiosPromise } from 'axios';
-import { ConfigType, NoteItemType } from './types';
+import { ConfigType, NoteItemType, UpdateViewsNoteItemType } from './types';
 
 const request = createHttpClient();
 
@@ -13,8 +14,8 @@ const request = createHttpClient();
  *
  * @returns {AxiosPromise} Результат ответа от сервера
  */
-const getNotes = (token: AuthAccessToken, config: ConfigType): AxiosPromise =>
-  request.get({
+const getNotes = (token: AuthAccessToken, config: ConfigType) =>
+  request.get<NoteItemType[]>({
     url: 'notes',
     headers: { Authorization: token },
     version: '',
@@ -40,14 +41,14 @@ const getNote = (id: string, token: AuthAccessToken): AxiosPromise =>
  * ## Обновить заметку
  *
  * @param {string} id id заметки
- * @param {NoteItemType} data Обновляемое свойство заметки
+ * @param {UpdateViewsNoteItemType} data Обновляемое свойство заметки
  * @param {AuthAccessToken} token Токен
  *
  * @returns {AxiosPromise} Результат ответа от сервера
  */
 const updateNote = (
   id: string,
-  data: NoteItemType,
+  data: UpdateViewsNoteItemType,
   token: AuthAccessToken,
 ): AxiosPromise =>
   request.patch({

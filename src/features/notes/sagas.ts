@@ -1,4 +1,4 @@
-import { logger, pathOr } from '@common/utils';
+import { pathOr } from '@common/utils';
 import { AccessToken } from '@features/auth';
 import { call, put } from 'redux-saga/effects';
 import { api } from './api';
@@ -16,14 +16,15 @@ import { ConfigType } from './types';
 function* getNotes(accessToken: AccessToken, config: ConfigType): Generator {
   try {
     const requestData = yield call(api.getNotes, accessToken, config);
+    const notes = pathOr(null, ['data'], requestData);
+    const headers = pathOr(null, ['headers'], requestData);
 
-    if (requestData) {
-      const notes = pathOr(null, ['data'], requestData);
-
-      yield put(actions.setNotes({ notes }));
-    }
-  } catch (err) {
-    logger(err);
+    yield put(
+      actions.setTotalCount({ totalCount: Number(headers['x-total-count']) }),
+    );
+    yield put(actions.setNotes({ notes }));
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
 
@@ -40,12 +41,10 @@ function* getNote(id: string, accessToken: AccessToken): Generator {
     const requestData = yield call(api.getNote, id, accessToken);
     const note = pathOr(null, ['data'], requestData);
     note.views += 1;
-
-    yield call(api.updateNote, id, { views: note.views }, accessToken);
-
     yield put(actions.setNote({ note }));
-  } catch (err) {
-    logger(err);
+    yield call(api.updateNote, id, { views: note.views }, accessToken);
+  } catch (error) {
+    throw new Error(error.message);
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import * as L from '@korus/leda';
 
 import { Note } from './Note';
@@ -21,9 +21,11 @@ export const Notes: React.FC<NotesType> = ({
    * @returns {JSX.Element} Список заметок
    */
   function renderNote() {
-    return notes.map((note: NoteItemType) => (
-      <Note note={note} queryStr={queryStr} key={note.id} />
-    ));
+    return notes.map(
+      (note: NoteItemType): ReactElement => (
+        <Note note={note} queryStr={queryStr} key={note.id} />
+      ),
+    );
   }
 
   return <L.Ul className="notes">{notes ? renderNote() : null}</L.Ul>;

@@ -36,6 +36,7 @@ export const Note: React.FC<NoteType> = ({
   const onClickHandler = useCallback(
     (tag) => {
       dispatch(actions.setActiveTag({ activeTag: tag }));
+      dispatch(actions.setCurrentPage({ currentPage: 1 }));
       dispatch(actions.loadingNotesPage());
     },
     [dispatch],
