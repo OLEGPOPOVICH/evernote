@@ -73,7 +73,7 @@ export const Tags: React.FC<TagsType> = ({
   return (
     <L.Ul className="tags padding-none">
       {tags && renderTags()}
-      {tags.length > params.show && !allTags ? (
+      {tags && tags.length > params.show && !allTags ? (
         <L.Li className="btn__all" onClick={() => setAllTags(true)}>
           Все
         </L.Li>
